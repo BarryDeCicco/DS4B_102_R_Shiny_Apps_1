@@ -6,7 +6,7 @@ output:
     vertical_layout: fill
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
 library(flexdashboard)
 library(plotly)
 
@@ -23,9 +23,9 @@ library(RSQLite)
 ```
 
 ```{r}
-# con <- dbConnect(RSQLite::SQLite(), "../00_data/bikes_database.db")
+con <- dbConnect(RSQLite::SQLite(), "../00_data/bikes_database.db")
 
-con <- dbConnect(RSQLite::SQLite(), "C:/Users/decicco1/OneDrive - Michigan State University/CSTATRedirects/Documents/R Studio Projects/Business-Science/DS4B 102-R Shiny Dashboards/DS4B_102_R_Shiny_Apps_1/00_data/bikes_database.db")
+# con <- dbConnect(RSQLite::SQLite(), "C:/Users/decicco1/OneDrive - Michigan State University/CSTATRedirects/Documents/R Studio Projects/Business-Science/DS4B 102-R Shiny Dashboards/DS4B_102_R_Shiny_Apps_1/00_data/bikes_database.db")
 
 # dbListTables(con)
 bikes_tbl <- tbl(con, "bikes")
@@ -48,3 +48,49 @@ dbDisconnect(con)
 
 ```
 
+Column {data-width=1000}
+------------------------------------------------------------
+
+### By State
+
+```{r aggregate_by_state, include=FALSE, echo=FALSE}
+
+geo_plot_tibble <- processed_data_tbl %>% 
+  group_by(state) %>% 
+  summarize(total_revenue = sum(extended_price)) %>% 
+  ungroup() %>% 
+  mutate(label_text = str_glue(
+    "State: {state}
+    Revenue: {scales::dollar(total_revenue)}"))
+
+# geo_plot_tibble
+
+```
+
+
+```{r include=TRUE, echo=FALSE}
+
+
+geo_plot_tibble %>% 
+  plot_geo(locationmode='USA-states') %>% 
+  add_trace(z         = ~total_revenue, 
+            locations = ~state,
+            color     = ~total_revenue,
+            text      = ~ label_text,
+            colors    = "Blues") %>% 
+  layout(geo = list(
+    scope      ="usa",
+    projection = list(type="albers usa"),
+    showlakes  = TRUE,
+    lakecolor  = toRGB("white")
+                    )
+
+    )
+  
+
+```
+
+
+```{r}
+
+```
