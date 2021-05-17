@@ -17,13 +17,13 @@ library(DT)
 library(tidyverse)
 library(tidyquant)
 
-# Database
-library(odbc)
-library(RSQLite)
+# Database           replaced with ordinary R data set.
+# library(odbc)
+# library(RSQLite)
 ```
 
 ```{r}
-# Make data
+# Make data    he used to = ymd("2019-05-10")
 set.seed(123)
 sales_data_tbl <- tibble(
   date  = seq.Date(from = ymd("2018-01-01"), to = today(), length.out = 90),
@@ -40,6 +40,14 @@ Sidebar {.sidebar}
 
 ```{r}
 # Inputs
+checkboxGroupInput(inputId = "checkbox_group",
+                   label=h4("Checkbox Group"),
+                   choices = c("Marketing"="marketing",
+                   "R&D" = "research",
+                   "Sales" = "sales"),
+                   selected = c("marketing","research","sales")
+                   )
+
 
 ```
 
@@ -57,6 +65,7 @@ Column {data-width=500}
 ### Section - Checkbox Output
 
 ```{r}
+renderPrint(input$checkbox_group)
 
 ```
 
