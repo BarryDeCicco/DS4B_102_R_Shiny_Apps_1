@@ -65,8 +65,14 @@ Column {data-width=500}
 ### Section - Checkbox Output
 
 ```{r}
-renderPrint(input$checkbox_group)
 
+# the input has components as identified in the 
+# input commands.
+
+# this command adds creates output$checkbox_values
+output$checkbox_values <- renderPrint(input$checkbox_group)
+
+textOutput(outputId ="checkbox_values")
 ```
 
 ### Section - Date Range
