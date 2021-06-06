@@ -45,10 +45,25 @@ checkboxGroupInput(inputId = "checkbox_group",
                    choices = c("Marketing"="marketing",
                    "R&D" = "research",
                    "Sales" = "sales"),
-                   selected = c("marketing","research","sales")
-                   )
+                   selected = c("marketing","research","sales"))
 
+dateRangeInput(inputId = "date_range",
+               label = h4("Date Range"),
+               start = "2018-01-01",
+               end   = "2019-05-10",
+               min   = min(sales_data_tbl$date),
+               max   = max(sales_data_tbl$date),
+               startview = "year")
 
+sliderInput(inputId = "slider_input",
+            label   = h4("Slider Range"),
+            min     = 1,
+            max     = 100, 
+            value   = c(40,60),
+            step    = 10,
+            round   = TRUE,
+            pre     = "$"
+            )
 ```
 
 
@@ -78,12 +93,19 @@ textOutput(outputId ="checkbox_values")
 ### Section - Date Range
 
 ```{r}
+output$date_range_values <- renderPrint(input$date_range)
 
+textOutput(outputId = "date_range_values")
+# This is a list of two values, in "".
 ```
 
 ### Section - Slider Output
 
 ```{r}
+
+output$slider_values <- renderPrint(input$slider_input)
+
+textOutput(outputId = "slider_values")
 
 ```
 
