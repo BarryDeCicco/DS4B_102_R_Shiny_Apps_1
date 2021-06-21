@@ -188,42 +188,46 @@ plotlyOutput(outputId = "plotly_1")
 
 ```
 
-
 Column {data-width=400}
----------------------------------------------------------------
+-------------------------------------------------------------------
 
 ### Over Time
 
 
+
+
 ```{r}
 
-# this produces a 60*3 table:
+time_unit <- "month"
 
-time_unit = "quarter"        # this controls the aggregation below.
-
-time_plot_tbl <- processed_data_tbl %>% 
-  mutate(date=floor_date(order.date, unit= time_unit)) %>% 
-# floor is from lubridate.
-  group_by(date) %>% 
-  summarize(total_sales = sum(extended_price)) %>% 
-  ungroup() %>% 
-  mutate(label_text = str_glue("Date: {date}
-                               Revenue: {scales::dollar(total_sales)}"))
-
-
-g <- time_plot_tbl %>% 
-  ggplot(aes(date, total_sales)) +
-  geom_line(color = "#2c3e50")   +
-  geom_point(aes(text = label_text), color = "#2c3e50", size = 0.1) +
-  geom_smooth(method = "loess", span = 0.2)     +
-
-  theme_tq()    +          # adds tidyquant theme
-  expand_limits(y=0) +  
-  scale_y_continuous(labels=scales::dollar_format())  +
-  labs(x = "", y = "")
+time_plot_tbl <- processed_data_tbl %>%
+    
+    mutate(date = floor_date(order.date, unit = time_unit)) %>%
+    
+    group_by(date) %>%
+    summarize(total_sales = sum(extended_price)) %>%
+    ungroup() %>%
+    
+    mutate(label_text = str_glue("Date: {date}
+                                 Revenue: {scales::dollar(total_sales)}"))
+  
 
 
-ggplotly(g, tooltip = "text")
+g <- time_plot_tbl %>%
+    ggplot(aes(date, total_sales)) +
+  
+    geom_line(color = "#2c3e50") +
+    geom_point(aes(text = label_text), color = "#2c3e50", size = 0.1) +
+    geom_smooth(method = "loess", span = 0.2) +
+  
+    theme_tq() +
+    expand_limits(y = 0) +
+    scale_y_continuous(labels = scales::dollar_format()) +
+    labs(x = "", y = "")
+  
+ggplotly(g, tooltip = "text") 
+  
 
+  
 ```
 
