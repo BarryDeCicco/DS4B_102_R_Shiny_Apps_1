@@ -197,28 +197,42 @@ Column {data-width=400}
 
 ```{r}
 
-# this produces a 60*3 table:
 
-time_unit = "quarter"        # this controls the aggregation below.
 
-time_plot_tbl <- processed_data_tbl %>% 
-  mutate(date=floor_date(order.date, unit= time_unit)) %>% 
-# floor is from lubridate.
-  group_by(date) %>% 
-  summarize(total_sales = sum(extended_price)) %>% 
-  ungroup() %>% 
-  mutate(label_text = str_glue("Date: {date}
+# this produces a data frame based on the date range picker:
+
+time_plot_tbl <- reactive({
+  
+    time_unit = "month"  # this controls the aggregation below.
+  
+    processed_data_tbl %>% 
+    filter(order.date %>% 
+             between(left=input$date_range[1],
+                     right =input$date_range[2])) %>% 
+      # floor is from lubridate.
+    mutate(date=floor_date(order.date, unit= time_unit)) %>% 
+    group_by(date) %>% 
+    summarize(total_sales = sum(extended_price)) %>% 
+    ungroup() %>% 
+    mutate(label_text = str_glue("Date: {date}
                                Revenue: {scales::dollar(total_sales)}"))
+  
+  })
+# print the results to the page:
+# 
+# renderDataTable({
+#   time_plot_tbl()    # REMEMBER THE (), OR NOTHING WILL PRINT!!!
+#   })
 
-
-g <- time_plot_tbl %>% 
+g <- time_plot_tbl %>%
   ggplot(aes(date, total_sales)) +
   geom_line(color = "#2c3e50")   +
-  geom_point(aes(text = label_text), color = "#2c3e50", size = 0.1) +
+  geom_point(aes(text = label_text), 
+             color = "#2c3e50", size = 0.1) +
   geom_smooth(method = "loess", span = 0.2)     +
 
   theme_tq()    +          # adds tidyquant theme
-  expand_limits(y=0) +  
+  expand_limits(y=0) +
   scale_y_continuous(labels=scales::dollar_format())  +
   labs(x = "", y = "")
 
