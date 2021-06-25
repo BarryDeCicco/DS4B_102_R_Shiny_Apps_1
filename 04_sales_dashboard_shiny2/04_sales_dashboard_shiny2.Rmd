@@ -194,6 +194,29 @@ Column {data-width=400}
 
 ### Over Time
 
+```{r}
+
+shinyWidgets::radioGroupButtons(
+  inputId = "time_unit",
+  label   = "Time Unit",
+  choices = c("D" = "day",
+              "W" = "week",
+              "M" = "month",
+              "Q" = "quarter",
+              "Y" = "year"),
+  selected = "month",
+  status   = "primary",
+  # status = "success" would give greens, "danger" reds.
+  justified = TRUE,
+  checkIcon = list( 
+    yes = icon("ok", lib="glyphicon"),
+    no  = NULL
+                  )
+  )
+
+
+```
+
 
 ```{r}
 
@@ -226,7 +249,7 @@ time_plot_tbl <- reactive({
 #   time_plot_tbl()    # REMEMBER THE (), OR NOTHING WILL PRINT!!!
 #   })
 
-renderPlotly({
+output$plotly_2  <- renderPlotly({
   g <- time_plot_tbl() %>%
     ggplot(aes(date, total_sales)) +
     geom_line(color = "#2c3e50")   +
@@ -239,9 +262,12 @@ renderPlotly({
     scale_y_continuous(labels=scales::dollar_format())  +
     labs(x = "", y = "")
 
-ggplotly(g, tooltip = "text")
+ggplotly(g, tooltip = "text") %>% 
+  layout(margin = list(b =200 ))
   
 })
+
+plotlyOutput(outputId = "plotly_2")
 
 
 ```
