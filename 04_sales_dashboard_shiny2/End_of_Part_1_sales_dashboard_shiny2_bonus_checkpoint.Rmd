@@ -159,29 +159,26 @@ processed_data_filtered_tbl <- eventReactive(
   ignoreNULL = FALSE
 )
 ```
-Row {data-heighth=150}
+
+Row {data-height=150}
 ---------------------------------------------------------------
 
-
 ```{r}
-
-# the 'fa' is for Font Awesome.
-
-
 summary_values_tbl <- reactive({
-  processed_data_filtered_tbl() %>% 
-  summarize(
-  # counts number of unique orders.
-  health_metric = unique(order.id) %>% length(),  
-  wealth_metric = sum(extended_price),
-  wise_metric = round(sum(str_detect(category_1,"Mountain"))/ (sum(str_detect(category_1,"Road")+0.001)),1)
-) %>% 
-  mutate(
-    health_metric = health_metric %>%
-      scales::number(big.mark = ","),
-    wealth_metric = wealth_metric %>%  
-      scales::dollar(scale = 1E-6,accuracy = 0.1, suffix   = "M")
-         )
+  
+  processed_data_filtered_tbl() %>%
+  
+    summarize(
+      health_metric = unique(order.id) %>% length(),
+      wealth_metric = sum(extended_price),
+      wise_metric   = (sum(str_detect(category_1, "Mountain")) / (sum(str_detect(category_1, "Road")) + 0.0001)) %>% 
+        round(1)
+    ) %>%
+    mutate(
+      health_metric = health_metric %>% scales::number(big.mark = ","),
+      wealth_metric = wealth_metric %>% scales::dollar(scale = 1e-6, accuracy = 0.1, suffix = "M")
+    )
+  
 })
 
 # renderPrint(summary_values_tbl())
@@ -190,59 +187,53 @@ summary_values_tbl <- reactive({
 
 
 ### Health
+
 ```{r}
-
-# 'fa' means 'font awesome'
-
 renderValueBox({
   
-valueBox(
-  value   = summary_values_tbl()$health_metric,
-  caption = "Orders",
-  icon    = "fa-heartbeat",
-  color   = "success"
-  )  
+  valueBox(
+    value   = summary_values_tbl()$health_metric, 
+    caption = "Orders", 
+    icon    = "fa-heartbeat", 
+    color   = "success")
   
 })
+
 
 ```
 
 
-### Wealth
-```{r}
+### Wealthy
 
+```{r}
 renderValueBox({
   
-valueBox(
-  value   = summary_values_tbl()$wealth_metric,
-  caption = "Sales ($)",
-  icon    = "fa-money-check-alt",
-  color   = "primary"
-  )  
+  valueBox(
+    value   = summary_values_tbl()$wealth_metric, 
+    caption = "Sales", 
+    icon    = "fa-money-check-alt", 
+    color   = "primary")
   
 })
-
 ```
 
 
 ### Wise
+
 ```{r}
 renderValueBox({
   
-valueBox(
-  value   = summary_values_tbl()$wise_metric,
-  caption = "Ratio, Mountain to Road",
-  icon    = "fa-brain",
-  color   = "info"
-  )  
+  valueBox(
+    value   = summary_values_tbl()$wise_metric, 
+    caption = "Ratio, Mountain to Road", 
+    icon    = "fa-brain", 
+    color   = "info")
   
 })
 ```
 
 
-
-
-Row {data-heighth=850}
+Row {data-height=850}
 ---------------------------------------------------------------
 
 ### By State
