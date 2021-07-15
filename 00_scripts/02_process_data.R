@@ -7,13 +7,13 @@ function(
     if(!append){
         data <- data %>% select(model)
     }
-
+    
     output_tbl <- data %>% mutate(model = case_when(
-            model == "CAAD Disc Ultegra" ~ "CAAD12 Disc Ultegra",
-            model == "Syapse Carbon Tiagra" ~ "Synapse Carbon Tiagra",
-            model == "Supersix Evo Hi-Mod Utegra" ~ "Supersix Evo Hi-Mod Ultegra",
-            TRUE ~ model
-        )) %>%
+        model == "CAAD Disc Ultegra" ~ "CAAD12 Disc Ultegra",
+        model == "Syapse Carbon Tiagra" ~ "Synapse Carbon Tiagra",
+        model == "Supersix Evo Hi-Mod Utegra" ~ "Supersix Evo Hi-Mod Ultegra",
+        TRUE ~ model
+    )) %>%
         
         # separate using spaces
         separate(col     = model, 
@@ -60,31 +60,31 @@ function(
             dura_ace  = model_tier %>% str_to_lower() %>% str_detect("dura ace") %>% as.numeric(),
             disc      = model_tier %>% str_to_lower() %>% str_detect("disc") %>% as.numeric()
         )
-
+    
     if(!keep_model_column){
         output_tbl <-  output_tbl %>% select(-model)
     }
     
     return(output_tbl)
-
+    
 }
 separate_bike_description <-
 function(
     data, 
     keep_description_column = TRUE,
     append = TRUE) {
-
+    
     if(!append){
         data <-  data %>% select(description)
     }
     output_tbl <- data %>% separate(description, 
-             sep    = " - ", 
-             into   = c("category_1", "category_2", "frame_material"), 
-             remove = FALSE) 
+                                    sep    = " - ", 
+                                    into   = c("category_1", "category_2", "frame_material"), 
+                                    remove = FALSE) 
     
-     if(!keep_description_column) output_tbl <- output_tbl %>% 
+    if(!keep_description_column) output_tbl <- output_tbl %>% 
         select(-description )
     
     return(output_tbl)
-
+    
 }
