@@ -133,18 +133,32 @@ model_xgboost <- read_rds("00_models/model_xgboost.rds")
 
 # based on the code above, under '2.1 Separate Description Column ----'
 
+data %>% bikes_tbl
+
 separate_bike_description <- function(
     data, 
     keep_description_column = TRUE,
     append = TRUE) {
 
-    data %>% separate(description, 
+    if(!append){
+        data <-  data %>% select(description)
+    }
+    output_tbl <- data %>% separate(description, 
              sep    = " - ", 
              into   = c("category_1", "category_2", "frame_material"), 
-             remove = FALSE)
+             remove = FALSE) 
     
+     if(!keep_description_column) output_tbl <- output_tbl %>% 
+        select(-description )
+    
+    return(output_tbl)
+
 }
 
+bikes_tbl %>% separate_bike_description(
+    keep_description_column=TRUE,
+    append = FALSE
+    )
 
 # 2.1 Separate Description Column ----
 
