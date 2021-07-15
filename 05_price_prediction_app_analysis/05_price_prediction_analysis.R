@@ -88,7 +88,8 @@ train_tbl <- bikes_tbl %>%
         ultegra   = model_tier %>% str_to_lower() %>% str_detect("ultegra") %>% as.numeric(),
         dura_ace  = model_tier %>% str_to_lower() %>% str_detect("dura ace") %>% as.numeric(),
         disc      = model_tier %>% str_to_lower() %>% str_detect("disc") %>% as.numeric()
-    )
+    ) 
+
 
 
 # 3.0 XGBOOST MODEL -----
@@ -126,23 +127,12 @@ model_xgboost %>%
 
 write_rds(model_xgboost, file = "00_models/model_xgboost.rds")
 
-model_xgboost <- read_rds("00_models/model_xgboost.rds")
+# model_xgboost <- read_rds("00_models/model_xgboost.rds")
 
 
 # 4.0 MODULARIZE PREPROCESSING CODE ----
 
 
-
-
-
-
-
-# separate using spaces
-separate(col     = model, 
-         into    = str_c("model_", 1:7), 
-         sep     = " ", 
-         remove  = FALSE, 
-         fill    = "right") %>%
 # 4.1 separate_bike_description() ----
 
 # based on the code above, under '2.1 Separate Description Column ----'
@@ -251,8 +241,7 @@ separate_bike_model <- function(
 
 bikes_tbl %>% separate_bike_description(
     keep_description_column=FALSE) %>% 
-    separate_bike_model(
-    keep_model_column=FALSE)
+    separate_bike_model(keep_model_column=FALSE)
 
 # 4.4 Save Functions ----
 
@@ -270,10 +259,47 @@ frame_material <- "Aluminum"
 
 # 5.2 Make Prediction ----
 
+train_tbl
+
+new_bike_tbl <- tibble(model = bike_model,
+       category_1 = category_1,
+       category_2 = category_2,
+       frame_material = frame_material
+       ) %>% 
+    separate_bike_model() 
+
+new_bike_tbl %>% predict(model_xgboost, new_data= . )
 
 # 6.0 MODULARIZE NEW BIKE PREDICTION ----
 
+
+
+
 # 6.1 generate_new_bike() Function ----  
+
+generate_new_bike <- function(bike_model,
+                              category_1,
+                              category_2,
+                              frame_material,
+                              .ml_model){
+    
+    new_bike_tbl <- tibble(model = bike_model,
+                           category_1 = category_1,
+                           category_2 = category_2,
+                           frame_material = frame_material
+    ) %>% 
+        separate_bike_model() 
+    
+    predict(.ml_model, new_data = new_bike_tbl) %>% 
+        bind_cols(new_bike_tbl) %>% rename(price = .pred)
+}
+
+new_bike_tbl <- generate_new_bike(
+    bike_model <- "Jekyll Aluminum 1 Black",
+    category_1 <- "Mountain",
+    category_2 <- "Over Mountain",
+    frame_material <- "Aluminum",
+    .ml_model = model_xgboost)
 
 
 
@@ -287,8 +313,14 @@ new_bike_tbl <- generate_new_bike(
     .ml_model = model_xgboost
 ) 
 
-new_bike_tbl
+test_tbl <- bikes_tbl %>% 
+    separate_bike_description() %>% 
+    separate_bike_model() %>% 
+    bind_rows(new_bike_tbl) %>% 
+    tail()
 
+View(new_bike_tbl)
+View(test_tbl)
 
 
 # 7.0 OUTPUT TABLE ----
