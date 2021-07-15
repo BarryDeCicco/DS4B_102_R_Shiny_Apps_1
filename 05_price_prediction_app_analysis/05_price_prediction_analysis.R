@@ -131,6 +131,30 @@ model_xgboost <- read_rds("00_models/model_xgboost.rds")
 
 # 4.0 MODULARIZE PREPROCESSING CODE ----
 
+# based on the code above, under '2.1 Separate Description Column ----'
+
+separate_bike_description <- function(
+    data, 
+    keep_description_column = TRUE,
+    append = TRUE) {
+
+    data %>% separate(description, 
+             sep    = " - ", 
+             into   = c("category_1", "category_2", "frame_material"), 
+             remove = FALSE)
+    
+}
+
+
+# 2.1 Separate Description Column ----
+
+    
+# separate using spaces
+separate(col     = model, 
+         into    = str_c("model_", 1:7), 
+         sep     = " ", 
+         remove  = FALSE, 
+         fill    = "right") %>%
 # 4.1 separate_bike_description() ----
 
 # 4.2 separate_bike_model() ----
