@@ -324,7 +324,18 @@ View(test_tbl)
 
 
 # 7.0 OUTPUT TABLE ----
+format_table <-  function(new_bike_tbl){
+    
+    new_bike_tbl %>% 
+    mutate(price = scales::dollar(price, accuracy=1)) %>% 
+    gather(key = "New Model Attribute", value = "value", -model,
+           factor_key = TRUE) %>% 
+    spread(key = model, value = value)
+    
+}
 
+
+new_bike_tbl %>% format_table()
 
 
 # 8.0 OUTPUT PLOT PRODUCTS ----
