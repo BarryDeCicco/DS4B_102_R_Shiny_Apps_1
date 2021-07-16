@@ -340,6 +340,18 @@ new_bike_tbl %>% format_table()
 
 # 8.0 OUTPUT PLOT PRODUCTS ----
 
+bind_bike_prediction <- function(bikes_tbl, new_bike_tbl){
+    bikes_tbl %>% 
+        separate_bike_description() %>% 
+        mutate(estimate = "Actual") %>% 
+        bind_rows(new_bike_tbl %>% mutate(estimate = "Prediction")
+                 ) %>% 
+        select(estimate, model, category_1, category_2,
+               frame_material, price)
+}
+
+bind_bike_prediction(bikes_tbl, new_bike_tbl)%>% tail()
+
 # 8.1 bind_bike_predictions() function ----
 
 
