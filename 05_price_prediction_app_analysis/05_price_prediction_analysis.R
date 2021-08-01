@@ -358,7 +358,10 @@ bind_bike_prediction(bikes_tbl, new_bike_tbl)%>% tail()
 
 # 8.2 plot_bike_prediction() function ----
 
-
+bind_bike_prediction(bikes_tbl, new_bike_tbl) %>% 
+    ggplot(aes(category_2, price, color=estimate))
+    
+    
 # 8.3 Save functions ----
 
 dump(c("generate_new_bike", "format_table", "bind_bike_prediction", "plot_bike_prediction"), 
