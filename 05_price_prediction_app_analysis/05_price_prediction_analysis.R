@@ -19,7 +19,7 @@ library(parsnip)
 library(odbc)
 library(RSQLite)
 
-
+library(xgboost)
 # Read Data
 con <- dbConnect(RSQLite::SQLite(), "00_data/bikes_database.db")
 bikes_tbl <- tbl(con, "bikes") %>% collect()
@@ -358,12 +358,40 @@ bind_bike_prediction(bikes_tbl, new_bike_tbl)%>% tail()
 
 # 8.2 plot_bike_prediction() function ----
 
+plot_bike_prediction <- function(data,interactive = TRUE){
+
+g <-  bind_bike_prediction(bikes_tbl, new_bike_tbl) %>%     # data
+    mutate(label_text = 
+               str_glue("Unit Price: {scales::dollar(price, accuracy =1)}
+                 Model: {model}
+                 Bike Type: {category_1}
+                 Bike Family: {category_2}
+                 Frame Material: {frame_material}")) %>% 
+        mutate(category_2 = fct_reorder(category_2, price)) %>%  # reorder by price
+        ggplot(aes(category_2, price, color=estimate)) +         # this aes is for ggplotly 
+        geom_violin() +
+        geom_jitter(aes(text=label_text),width = 0.1, alpha=0.5) + 
+        facet_wrap(~frame_material) +
+        coord_flip() +
+        scale_y_log10(labels = scales::dollar_format(accuracy = 1)) +
+        scale_color_tq() +
+        theme_tq(strip.text.x = element_text(margin = margin(5, 5, 5, 5))) +
+        labs(title = "", x = "", y = "Log Scale")    
+    
+    if (interactive) { 
+       return(ggplotly(g, tooltip = "text") )
+    } else {
+       return(g)
+    }
+}
+
+
 bind_bike_prediction(bikes_tbl, new_bike_tbl) %>% 
-    ggplot(aes(category_2, price, color=estimate))
-    
-    
+    plot_bike_prediction(interactive=TRUE)            # False DOES NOT WORK!
+
+
 # 8.3 Save functions ----
 
 dump(c("generate_new_bike", "format_table", "bind_bike_prediction", "plot_bike_prediction"), 
-     file = "00_scripts/02_make_predictions.R")
+     file = "00_scripts/03_make_predictions.R")
     
