@@ -82,7 +82,8 @@ new_bike_tbl <- eventReactive(eventExpr = input$apply,
     category_2 = "Over Mountain", 
     frame_material = "Aluminum", 
     .ml_model = model_xgboost)
-              })
+              },
+    ignoreNULL = FALSE)
  
 ```
 
@@ -93,11 +94,12 @@ new_bike_tbl <- eventReactive(eventExpr = input$apply,
 
 # renderPrint(new_bike_tbl())
 
-renderPlotly({
+output$plotly_1 <- renderPlotly({
   bind_bike_prediction(bikes_tbl, new_bike_tbl()) %>%     plot_bike_prediction()
-  
-  
 })
+
+plotlyOutput("plotly_1")
+
 
 ```
 
@@ -107,7 +109,10 @@ Column {data-width=350}
 ### Price Prediction Used These Features
 
 ```{r}
-#new_bike_tbl %>% format_table()
+renderTable({
+  new_bike_tbl() %>% format_table()
+  })
+
 ```
 
 
