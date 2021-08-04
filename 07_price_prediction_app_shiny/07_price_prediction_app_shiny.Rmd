@@ -14,6 +14,8 @@ runtime: shiny
 # App
 library(flexdashboard)
 library(shiny)
+library(shinyjs)
+
 
 # Core
 library(tidyverse)
@@ -52,6 +54,8 @@ Column {.sidebar}
 
 ```{r}
 
+useShinyjs(rmd = TRUE)
+
 textInput(inputId = "text_bike_model", 
           label   = h4("Bike Model"),
           value   = "Jekyll Al 1 Black Inc."
@@ -65,9 +69,27 @@ actionButton(inputId = "apply",
              icon = icon(name="play", 
                          lib = "font-awesome")
              )
-             
+
+# 7.2 challenge - adding reset button:
+
+# Here is the button:
 actionButton(inputId = "reset", label = "Reset", icon = icon("sync"))
 
+# Here ist he code:
+observeEvent(eventExpr = input$reset, 
+             handlerExpr = {
+  
+  updateTextInput(
+    session  = session, 
+    inputId  = "text_bike_model", 
+    value    = "Jekyll Al 1 Black Inc.")
+
+  shinyjs::delay(ms = 300, expr = {
+    shinyjs::click(id = "apply")
+  })
+ 
+  
+})
 ```
 
 Column {data-width=650}
