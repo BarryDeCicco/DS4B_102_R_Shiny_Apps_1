@@ -54,7 +54,7 @@ Column {.sidebar}
 
 textInput(inputId = "text_bike_model", 
           label   = h4("Bike Model"),
-          value   = "Jekyll Al 1 Blank Inc."
+          value   = "Jekyll Al 1 Black Inc."
 )
 br()
 hr()
@@ -66,7 +66,8 @@ actionButton(inputId = "apply",
                          lib = "font-awesome")
              )
              
-                         
+actionButton(inputId = "reset", label = "Reset", icon = icon("sync"))
+
 ```
 
 Column {data-width=650}
