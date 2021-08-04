@@ -38,7 +38,7 @@ function(bikes_tbl, new_bike_tbl){
 plot_bike_prediction <-
 function(data,interactive = TRUE){
 
-g <-  data %>%     
+g <-  data %>%     # data
     mutate(label_text = 
                str_glue("Unit Price: {scales::dollar(price, accuracy =1)}
                  Model: {model}
@@ -53,7 +53,8 @@ g <-  data %>%
         coord_flip() +
         scale_y_log10(labels = scales::dollar_format(accuracy = 1)) +
         scale_color_tq() +
-        theme_tq(strip.text.x = element_text(margin = margin(5,5,5,5))) +
+        theme_tq() +
+        theme(strip.text.x = element_text(margin = margin(5, 5, 5, 5))) +
         labs(title = "", x = "", y = "Log Scale")    
     
     if (interactive) { 
