@@ -84,8 +84,16 @@ actionButton(inputId = "apply", label = "Apply", icon = icon(name = "play", lib 
 actionButton("reset", label = "Reset", icon = icon("sync"))
 
 observeEvent(eventExpr = input$reset, handlerExpr = {
-  
-  updateTextInput(session = session, inputId = "text_bike_model", value = "Jekyll Al 1 Black Inc.")
+
+# This resets the text input box:  
+  updateTextInput(session = session, 
+                  inputId = "text_bike_model", 
+                  value = "Jekyll Al 1 Black Inc.")
+
+# This resets the picker button (bike family selector dropdown):
+  updatePickerInput(session = session,
+                    inputId = "picker_category_2",
+                    selected = "Over Mountain")
   
   delay(ms = 300, expr = {
     click(id = "apply")
