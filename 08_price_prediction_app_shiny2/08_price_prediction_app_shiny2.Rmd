@@ -114,7 +114,13 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
   updatePickerInput(session = session,
                     inputId = "picker_category_2",
                     selected = "Over Mountain")
+
+# This resets the picker button (bike family selector dropdown):
+updatePickerInput(session = session,
+                    inputId = "picker_frame_material",
+                    selected = "Aluminum")
   
+    
   delay(ms = 300, expr = {
     click(id = "apply")
   })
@@ -134,7 +140,7 @@ new_bike_tbl <- eventReactive(eventExpr = input$apply, valueExpr = {
     bike_model = input$text_bike_model, 
     category_1 = bike_type(), 
     category_2 = input$picker_category_2, 
-    frame_material = "Aluminum", 
+    frame_material = input$picker_frame_material, 
     .ml_model = model_xgboost)
   
 }, ignoreNULL = FALSE)
