@@ -86,6 +86,16 @@ textOutput(outputId = "bike_type") %>% em() %>% strong() %>% h1()
 
 # Frame Material ---- 
 br()
+pickerInput(inputId = "picker_frame_material",
+            label = "Frame Material",
+            choices = c("Aluminum", "Carbon"),
+            selected = "Aluminum"
+            )
+            
+
+
+
+br()
 hr()
 br()
 
