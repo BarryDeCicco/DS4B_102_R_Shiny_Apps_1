@@ -70,12 +70,15 @@ actionButton(inputId = "apply",
                          lib = "font-awesome")
              )
 
-# 7.2 challenge - adding reset button:
+# 7.2 challenge - adding reset button.  This also needs:
+
+# library(shinyjs)        # up top, loading libaries.
+# useShinyjs(rmd = TRUE)  # in the sidebar r chunk.
 
 # Here is the button:
 actionButton(inputId = "reset", label = "Reset", icon = icon("sync"))
 
-# Here ist he code:
+# Here is the code:
 observeEvent(eventExpr = input$reset, 
              handlerExpr = {
   
@@ -88,7 +91,6 @@ observeEvent(eventExpr = input$reset,
     shinyjs::click(id = "apply")
   })
  
-  
 })
 ```
 
