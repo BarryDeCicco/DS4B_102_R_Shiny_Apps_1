@@ -15,6 +15,7 @@ runtime: shiny
 library(flexdashboard)
 library(shiny)
 library(shinyjs)
+library(shinyWidgets)
 
 # Core
 library(tidyverse)
@@ -53,8 +54,15 @@ Column {.sidebar}
 ```{r}
 useShinyjs(rmd = TRUE)
 
+# Bike Model Input ----
 textInput(inputId = "text_bike_model", label = h4("Bike Model"), value = "Jekyll Al 1 Black Inc.")
 
+# Bike Family (Category 2) ----
+
+
+# Bike Type (Category 1) ----       Determined from category 2 value.
+
+# Frame Material ---- 
 br()
 hr()
 br()
