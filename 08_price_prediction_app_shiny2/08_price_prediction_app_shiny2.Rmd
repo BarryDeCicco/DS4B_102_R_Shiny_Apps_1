@@ -105,7 +105,7 @@ new_bike_tbl <- eventReactive(eventExpr = input$apply, valueExpr = {
   generate_new_bike(
     bike_model = input$text_bike_model, 
     category_1 = "Mountain", 
-    category_2 = "Over Mountain", 
+    category_2 = input$picker_category_2, 
     frame_material = "Aluminum", 
     .ml_model = model_xgboost)
   
