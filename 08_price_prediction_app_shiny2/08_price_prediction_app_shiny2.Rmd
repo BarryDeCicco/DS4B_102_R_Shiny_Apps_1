@@ -74,11 +74,14 @@ pickerInput(inputId = "picker_category_2",
 
 # Bike Type (Category 1) ----       Determined from category 2 value.
 h4("Bike Type")
-output$bike_type <- reactive({
+bike_type <- output$bike_type <- reactive({
   category_hierarchy_tbl %>% 
     filter(category_2 == input$picker_category_2) %>% 
     pull(category_1)
   })
+
+output$bike_type <-  renderText(bike_type())
+
 textOutput(outputId = "bike_type") %>% em() %>% strong() %>% h1()
 
 # Frame Material ---- 
@@ -119,7 +122,7 @@ new_bike_tbl <- eventReactive(eventExpr = input$apply, valueExpr = {
   
   generate_new_bike(
     bike_model = input$text_bike_model, 
-    category_1 = "Mountain", 
+    category_1 = bike_type(), 
     category_2 = input$picker_category_2, 
     frame_material = "Aluminum", 
     .ml_model = model_xgboost)
