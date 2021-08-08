@@ -45,8 +45,7 @@ source("../00_scripts/02_process_data.R")
 source("../00_scripts/03_make_predictions.R")
 
 # Model
-# model_xgboost <- read_rds("00_models/model_xgboost.rds")
- model_xgboost <- read_rds("../00_models/model_xgboost.rds")
+model_xgboost <- read_rds("../00_models/model_xgboost.rds")
 
 ```
 
@@ -61,8 +60,17 @@ textInput(inputId = "text_bike_model", label = h4("Bike Model"), value = "Jekyll
 
 # Bike Family (Category 2) ----
 
-bikes_tbl %>% separate_bike_description(keep_description_column - TRUE,
-                                        append=FALSE)
+category_hierarchy_tbl <- bikes_tbl %>% separate_bike_description(
+  keep_description_column = TRUE,
+  append=FALSE) %>% 
+  distinct(category_1, category_2)
+
+pickerInput(inputId = "picker_category_2",
+            label = h4("Bike Family"),
+            choices = category_hierarchy_tbl$category_2,
+            selected = "Over Mountain"
+            )
+            
 
 # Bike Type (Category 1) ----       Determined from category 2 value.
 
