@@ -182,6 +182,23 @@ renderTable({
 
 ```{r}
 
+# CSS causes renderPrint() to print in capitals - the data is not!
+# 1. Render lower case; 2.  Replace spaces with underscores.
+
+# First, run "generate_new_bike("F-Si","Mountain","Cross Country Race","Aluminum", .ml_model = model_xgboost)" to get new data.
+
+new_bike_tbl <- generate_new_bike("Beast of the East","Mountain","Cross Country Race","Aluminum", 
+                                  .ml_model = model_xgboost)
+
+renderPrint({
+  detect <- new_bike_tbl %>% 
+    pull(model_base) %>% 
+    str_to_lower() %>% 
+    str_replace_all("-","_") %>% 
+    str_replace_all(" ","_")
+  
+  detect 
+})
 
 ```
 
