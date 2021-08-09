@@ -22,7 +22,8 @@ library(shinyWidgets)
 # Core
 library(tidyverse)
 library(tidyquant)
-ligrary(fs)                # for file system commands.
+library(fs)                # for file system commands.
+
 # Visualizations
 library(plotly)
 
