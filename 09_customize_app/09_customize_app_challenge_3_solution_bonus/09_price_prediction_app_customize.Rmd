@@ -195,8 +195,16 @@ renderImage({
     pull(model_base) %>% 
     str_to_lower() %>% 
     str_replace_all("-","_") %>% 
-    str_replace_all(" ","_")
+    str_replace_all(" ","_") 
+
+# Deal with model bases containing numbers:
   
+  detect <- ifelse(detect %in% c("caad8", "caad12"), 
+                      yes = detect,
+                      no  = detect %>% 
+                     str_remove_all(pattern = "[[:digit]]")
+  )
+          
   directory_files <- fs::dir_ls("bike_img")
   detection_results <- directory_files %>% 
     str_detect(pattern = str_glue("bike_img/{detect}"))
