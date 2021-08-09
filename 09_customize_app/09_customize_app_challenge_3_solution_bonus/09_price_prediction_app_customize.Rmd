@@ -22,7 +22,7 @@ library(shinyWidgets)
 # Core
 library(tidyverse)
 library(tidyquant)
-
+ligrary(fs)                # for file system commands.
 # Visualizations
 library(plotly)
 
@@ -36,19 +36,33 @@ library(RSQLite)
 
 
 # 2.0 Data ----
+# This is for running the app from shiny:
 con <- dbConnect(RSQLite::SQLite(), "../../00_data/bikes_database.db")
+
+# This is for running the app as an ordinary Rmd or R script:
 # con <- dbConnect(RSQLite::SQLite(), "00_data/bikes_database.db")
-# dbListTables(con)
+
+dbListTables(con)
 bikes_tbl <- tbl(con, "bikes") %>% collect()
 dbDisconnect(con)
 
 # Scripts
+# From Shiny:
 source("../../00_scripts/02_process_data.R")
 source("../../00_scripts/03_make_predictions.R")
 source("plot_bike_prediction_cannondale.R")
 
+# as ordinary Rmd or R file:
+# source("00_scripts/02_process_data.R")
+# source("00_scripts/03_make_predictions.R")
+# source("09_customize_app/09_customize_app_challenge_3_solution_bonus/plot_bike_prediction_cannondale.R")
+
 # Model
+# From Shiny:
 model_xgboost <- read_rds("../../00_models/model_xgboost.rds")
+# as ordinary Rmd or R file:
+# model_xgboost <- read_rds("00_models/model_xgboost.rds")
+
 ```
 
 Column {.sidebar}
