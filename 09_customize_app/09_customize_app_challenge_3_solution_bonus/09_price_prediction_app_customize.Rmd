@@ -198,6 +198,14 @@ renderPrint({
     str_replace_all(" ","_")
   
   detect 
+  
+  directory_files <- fs::dir_ls("09_customize_app/09_customize_app_challenge_3_solution_bonus/bike_img")
+  detection_result <- directory_files %>% 
+    str_detect(pattern = str_glue("bike_img/{detect}"))
+  
+  path <- directory_files[detection_result]
+
+  
 })
 
 ```
