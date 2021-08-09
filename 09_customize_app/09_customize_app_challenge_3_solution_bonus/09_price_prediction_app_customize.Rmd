@@ -190,7 +190,7 @@ renderTable({
 # new_bike_tbl <- generate_new_bike("Beast of the East","Mountain","Cross Country Race","Aluminum", 
 #                                  .ml_model = model_xgboost)
 
-renderPrint({
+renderImage({
   detect <- new_bike_tbl() %>% 
     pull(model_base) %>% 
     str_to_lower() %>% 
@@ -203,9 +203,13 @@ renderPrint({
   
   path <- directory_files[detection_results]
 
-  path
-  
-})
+  list(
+    src = path,
+    contentType = "image/png",
+    width = "100%",
+    alt = detect)
+
+},deleteFile = FALSE)
 
 ```
 
