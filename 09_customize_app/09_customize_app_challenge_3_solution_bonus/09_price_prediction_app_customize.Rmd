@@ -177,4 +177,10 @@ renderTable({
 
 ```
 
+### Images
+
+```{r}
+
+
+```
 
