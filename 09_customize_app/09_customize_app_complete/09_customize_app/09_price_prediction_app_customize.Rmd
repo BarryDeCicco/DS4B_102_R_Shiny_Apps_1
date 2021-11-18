@@ -36,8 +36,15 @@ library(RSQLite)
 
 
 # 2.0 Data ----
-con <- dbConnect(RSQLite::SQLite(), "../00_data/bikes_database.db")
+
+getwd()
+
+# For PC:  
+con <- dbConnect(RSQLite::SQLite(), "C:/Users/Barry/Documents/R Studio Projects/DS4B_102_R_Shiny_Apps_1/00_data/bikes_database.db")
+
+# con <- dbConnect(RSQLite::SQLite(), "../00_data/bikes_database.db")
 # con <- dbConnect(RSQLite::SQLite(), "00_data/bikes_database.db")
+
 # dbListTables(con)
 bikes_tbl <- tbl(con, "bikes") %>% collect()
 dbDisconnect(con)
