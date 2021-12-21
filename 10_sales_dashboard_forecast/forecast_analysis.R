@@ -68,7 +68,24 @@ time_plot_tbl
 
 # TODO - aggregate_time_series() 
 
+aggregate_time_series <- function(data, time_unit="month"){
+    
+    output_tbl <- data %>%
+        
+        mutate(date = floor_date(order.date, unit = time_unit)) %>%
+        
+        group_by(date) %>%
+        summarize(total_sales = sum(extended_price)) %>%
+        ungroup() %>%
+        
+        mutate(label_text = str_glue("Date: {date}
+                                 Revenue: {scales::dollar(total_sales)}"))
+    
+    return(output_tbl)
+    
+}
 
+processed_data_tbl %>% aggregate_time_series(time_unit="year")
 
 # 3.3 TIME SERIES PLOT ----
 
