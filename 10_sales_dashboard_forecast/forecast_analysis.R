@@ -66,7 +66,7 @@ time_plot_tbl
 
 # 3.2 FUNCTION ----
 
-# TODO - aggregate_time_series() 
+# aggregate_time_series() 
 
 aggregate_time_series <- function(data, time_unit="month"){
     
@@ -111,7 +111,27 @@ ggplotly(g, tooltip = "text")
 
 # 3.4 FUNCTION ----
 
-# TODO - MAKE FUNCTION 
+# plot_time_series()
+
+plot_time_series <- function(data){
+    
+    g <- data %>%
+        
+        ggplot(aes(date, total_sales)) +
+        
+        geom_line(color = "#2c3e50") +
+        geom_point(aes(text = label_text), color = "#2c3e50", size = 0.1) +
+        geom_smooth(method = "loess", span = 0.2) +
+        
+        theme_tq() +
+        expand_limits(y = 0) +
+        scale_y_continuous(labels = scales::dollar_format()) +
+        labs(x = "", y = "")
+    
+    
+    ggplotly(g, tooltip = "text")
+}
+
 
 
 # 4.0 FORECAST -----
