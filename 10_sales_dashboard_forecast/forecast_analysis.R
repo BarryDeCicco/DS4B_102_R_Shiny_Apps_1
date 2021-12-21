@@ -132,7 +132,9 @@ plot_time_series <- function(data){
     ggplotly(g, tooltip = "text")
 }
 
-
+processed_data_tbl %>% 
+    aggregate_time_series(time_unit="week") %>% 
+    plot_time_series()
 
 # 4.0 FORECAST -----
 
@@ -140,7 +142,15 @@ plot_time_series <- function(data){
 
 # TODO - timetk
 
+data <- processed_data_tbl %>% 
+    aggregate_time_series(time_unit="month") 
+
+data %>% timetk::tk_index() %>% get_timeseries_signature() 
+
+
+
 # 4.2 MACHINE LEARNING ----
+
 
 # TODO - XGBoost
 
