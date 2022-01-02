@@ -136,18 +136,26 @@ processed_data_tbl %>%
     aggregate_time_series(time_unit="week") %>% 
     plot_time_series()
 
+
+
+
+
 # 4.0 FORECAST -----
 
 # 4.1 SETUP TRAINING DATA AND FUTURE DATA ----
 
-# TODO - timetk
+# timetk
 
 data <- processed_data_tbl %>% 
     aggregate_time_series(time_unit="month") 
 
-data %>% timetk::tk_index() %>% get_timeseries_signature() 
+data 
 
-
+data %>% timetk::tk_index() %>% tk_get_timeseries_signature() 
+data %>% timetk::tk_index() %>% tk_get_timeseries_summary() 
+tk_get_timeseries_unit_frequency()  # shows how the data can be split by time period.
+data %>% tk_get_timeseries_variables()
+data %>% tk_augment_timeseries_signature()
 
 # 4.2 MACHINE LEARNING ----
 
