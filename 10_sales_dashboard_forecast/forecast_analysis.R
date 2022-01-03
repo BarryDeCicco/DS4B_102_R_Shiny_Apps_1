@@ -157,15 +157,37 @@ tk_get_timeseries_unit_frequency()  # shows how the data can be split by time pe
 data %>% tk_get_timeseries_variables()
 data %>% tk_augment_timeseries_signature()
 
+train_tbl  <-  data %>% 
+    tk_augment_timeseries_signature()
+# in the code below, 'n_future' was swapped out for 'length_out', due to updates in the timetk package.
+future_data_tbl <-  data %>% 
+    tk_index() %>% 
+    tk_make_future_timeseries(length_out = 12, inspect_weekdays = TRUE,  inspect_months = TRUE) %>% 
+    tk_get_timeseries_signature() 
+
 # 4.2 MACHINE LEARNING ----
 
+# TODO - XGBoost (from parsnip):
 
-# TODO - XGBoost
+seed <- 123        # set seed
+set.seed(seed) 
+model_xgboost <- boost_tree(
+        mode = "regression", 
+        mtry = 20, 
+        trees = 500,  
+        min_n = 3, 
+        tree_depth = 8, 
+        learn_rate = 0.01, 
+        loss_reduction = 0.01) %>% 
+    set_engine(engine = "xgboost") %>% 
+    fit.model_spec(total_sales ~ ., data = train_tbl %>% select(-date,-label_text, -diff))
+
 
 # 4.3 MAKE PREDICTION & FORMAT OUTPUT ----
 
 # TODO - predict
 
+future
 # 4.4 FUNCTION ----
 
 # TODO - generate_forecast()
