@@ -594,9 +594,9 @@ ggplotly(g, tooltip = "text")
 
 data <- processed_data_tbl %>% 
     aggregate_time_series(time_unit="month") %>% 
-    generate_forecast(length_out=12, seed = 123) 
+    generate_forecast(length_out=1, seed = 123) 
 
-plot_forecast <-  function(){
+plot_forecast <-  function(data){
     data %>% ggplot(aes(date, total_sales, color = key)) +
         geom_line() +
         geom_point(aes(text=label_text), size = 0.01) +
