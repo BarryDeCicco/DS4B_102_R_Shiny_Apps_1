@@ -205,13 +205,76 @@ output_tbl
 
 # TODO - generate_forecast()
 
+generate_forecast <- function(data, length_out =12, seed = NULL){
+    
+    train_tbl  <-  data %>% 
+        tk_augment_timeseries_signature()
+    # in the code below, 'n_future' was swapped out for 'length_out', due to updates in the timetk package.
+    future_data_tbl <-  data %>% 
+        tk_index() %>% 
+        tk_make_future_timeseries(length_out, inspect_weekdays = TRUE,  
+                                  inspect_months = TRUE) %>% 
+        tk_get_timeseries_signature() 
+    
+    seed <- seed        # set seed
+    set.seed(seed) 
+    model_xgboost <- boost_tree(
+        mode = "regression", 
+        mtry = 20, 
+        trees = 500,  
+        min_n = 3, 
+        tree_depth = 8, 
+        learn_rate = 0.01, 
+        loss_reduction = 0.01) %>% 
+        set_engine(engine = "xgboost") %>% 
+        fit.model_spec(total_sales ~ ., data = train_tbl %>% select(-date,-label_text, -diff))
+    
 
+    prediction_tbl <- predict(model_xgboost, new_data = future_data_tbl) %>% 
+        bind_cols(future_data_tbl) %>% 
+        select(.pred, index) %>% 
+        rename(total_sales = .pred,
+               date        = index) %>% 
+        mutate(label_text = str_glue("Date: {date}
+                                 Revenue:  {scales::dollar(total_sales)}" )) %>% 
+        add_column(key = "Prediction")
+    
+    output_tbl <- data %>% add_column(key = "Actual") %>% 
+        bind_rows(prediction_tbl) 
+    
+    return(output_tbl) 
+    
+    
+}
+
+# test the function:
+
+processed_data_tbl %>% 
+    aggregate_time_series(time_unit="month") %>% 
+    generate_forecast(length_out=12, seed = 123) %>% 
+    tail(20)
+    
 
 # 5.0 PLOT FORECAST ----
 
 # 5.1 PLOT ----
 
 # TODO - plot
+
+data <- processed_data_tbl %>% 
+    aggregate_time_series(time_unit="month") %>% 
+    generate_forecast(length_out=12, seed = 123) 
+
+g <- data %>% ggplot(aes(date, total_sales, color = key)) +
+    geom_line() +
+    geom_point(aes(text=label_text), size = 0.01) +
+    geom_smooth(method = "loess", span = 0.2) +
+    theme_tq() +              # tidyquant theme)
+    scale_color_tq()+
+    scale_y_continuous(labels = scales::dollar_format()) +
+    labs(x = "", y = "")
+    
+ggplotly(g, tooltip = "text")
 
 # 5.2 FUNCTION ----
 
