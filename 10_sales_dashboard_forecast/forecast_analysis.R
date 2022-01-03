@@ -182,12 +182,25 @@ model_xgboost <- boost_tree(
     set_engine(engine = "xgboost") %>% 
     fit.model_spec(total_sales ~ ., data = train_tbl %>% select(-date,-label_text, -diff))
 
-
 # 4.3 MAKE PREDICTION & FORMAT OUTPUT ----
 
 # TODO - predict
+future_data_tbl
 
-future
+prediction_tbl <- predict(model_xgboost, new_data = future_data_tbl) %>% 
+    bind_cols(future_data_tbl) %>% 
+    select(.pred, index) %>% 
+    rename(total_sales = .pred,
+           date        = index) %>% 
+    mutate(label_text = str_glue("Date: {date}
+                                 Revenue:  {scales::dollar(total_sales)}" )) %>% 
+    add_column(key = "Prediction")
+
+output_tbl <- data %>% add_column(key = "Actual") %>% 
+    bind_rows(prediction_tbl) 
+
+output_tbl 
+    
 # 4.4 FUNCTION ----
 
 # TODO - generate_forecast()
