@@ -283,8 +283,8 @@ ggplotly(g, tooltip = "text")
 # TODO - plot_forecast()
 
 data <- processed_data_tbl %>%
-    aggregate_time_series(time_unit = "year") %>%
-    generate_forecast(n_future = 1, seed = 123)
+    aggregate_time_series(time_unit = "month") %>%
+    generate_forecast(n_future = 12, seed = 123)
 
 plot_forecast <- function(data) {
     

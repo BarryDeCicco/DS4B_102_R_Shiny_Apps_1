@@ -1,0 +1,1 @@
+The top-level copy of 'forecast_analysis.R' is based on the file 'forecast_analysis_code_checkpoint_1.R'.  The copy of 'forecast_analysis.R' in this folder is the one I developed.
