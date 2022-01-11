@@ -217,22 +217,36 @@ generate_forecast <- function(data, n_future = 12, seed = NULL) {
         tk_index() %>%
         tk_make_future_timeseries(n_future = n_future, inspect_weekdays = TRUE, inspect_months = TRUE) %>%
         tk_get_timeseries_signature() 
+
+    data %>% 
+        tk_index() %>% 
+        tk_get_timeseries_summary() %>% 
+        pull(scale)
     
-    seed <- seed
-    set.seed(seed)
-    model_xgboost <- boost_tree(
-        mode = "regression", 
-        mtry = 20, 
-        trees = 500, 
-        min_n = 3, 
-        tree_depth = 8, 
-        learn_rate = 0.01, 
-        loss_reduction = 0.01) %>%
-        set_engine(engine = "xgboost") %>%
-        fit.model_spec(total_sales ~ ., data = train_tbl %>% select(-date, -label_text, -diff))
+    if (time_scale == "year") {
+        
+        model <- linear_reg(mode = "regression") %>% 
+            set_engine(engine = "lm") %>% 
+            fit.model_spec(total_sales ~ ., data = train_tbl %>% dplyr::select(total_sales, index.num))
+ 
+    } else {
+        seed <- seed
+        set.seed(seed)
+        model <- boost_tree(
+                mode = "regression", 
+                mtry = 20, 
+                trees = 500, 
+                min_n = 3, 
+                tree_depth = 8, 
+                learn_rate = 0.01, 
+                loss_reduction = 0.01) %>%
+            set_engine(engine = "xgboost") %>%
+            fit.model_spec(total_sales ~ ., data = train_tbl %>% select(-date, -label_text, -diff))
+        }
+        
+ # The if-else block above will return a 'model', which is XGBoost or a linear regression   
     
-    
-    prediction_tbl <- predict(model_xgboost, new_data = future_data_tbl) %>%
+    prediction_tbl <- predict(model, new_data = future_data_tbl) %>%
         bind_cols(future_data_tbl) %>%
         select(.pred, index) %>%
         rename(total_sales = .pred, 
@@ -252,8 +266,8 @@ generate_forecast <- function(data, n_future = 12, seed = NULL) {
 
 
 processed_data_tbl %>%
-    aggregate_time_series(time_unit = "month") %>%
-    generate_forecast(n_future = 12, seed = 123) 
+    aggregate_time_series(time_unit = "year") %>%
+    generate_forecast(n_future = 2, seed = 123) 
 
 # 5.0 PLOT FORECAST ----
 
@@ -261,8 +275,8 @@ processed_data_tbl %>%
 
 # TODO - plot
 data <- processed_data_tbl %>%
-    aggregate_time_series(time_unit = "month") %>%
-    generate_forecast(n_future = 12, seed = 123) 
+    aggregate_time_series(time_unit = "year") %>%
+    generate_forecast(n_future = 2, seed = 123) 
 
 g <- data %>%
     ggplot(aes(date, total_sales, color = key)) +
@@ -305,8 +319,8 @@ plot_forecast <- function(data) {
 }
 
 processed_data_tbl %>%
-    aggregate_time_series(time_unit = "month") %>%
-    generate_forecast(n_future = 12, seed = 123) %>%
+    aggregate_time_series(time_unit = "year") %>%
+    generate_forecast(n_future = 2, seed = 123) %>%
     plot_forecast()
 
 
