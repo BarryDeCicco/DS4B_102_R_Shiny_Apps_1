@@ -218,7 +218,7 @@ generate_forecast <- function(data, n_future = 12, seed = NULL) {
         tk_make_future_timeseries(n_future = n_future, inspect_weekdays = TRUE, inspect_months = TRUE) %>%
         tk_get_timeseries_signature() 
 
-    data %>% 
+    time_scale <- data %>% 
         tk_index() %>% 
         tk_get_timeseries_summary() %>% 
         pull(scale)
@@ -264,7 +264,6 @@ generate_forecast <- function(data, n_future = 12, seed = NULL) {
     return(output_tbl)
 }
 
-
 processed_data_tbl %>%
     aggregate_time_series(time_unit = "year") %>%
     generate_forecast(n_future = 2, seed = 123) 
@@ -297,8 +296,8 @@ ggplotly(g, tooltip = "text")
 # TODO - plot_forecast()
 
 data <- processed_data_tbl %>%
-    aggregate_time_series(time_unit = "month") %>%
-    generate_forecast(n_future = 12, seed = 123)
+    aggregate_time_series(time_unit = "year") %>%
+    generate_forecast(n_future = 2, seed = 123)
 
 plot_forecast <- function(data) {
     
@@ -312,6 +311,7 @@ plot_forecast <- function(data) {
         theme_tq() +
         scale_color_tq() +
         scale_y_continuous(labels = scales::dollar_format()) +
+        expand_limits(y = 0) +
         labs(x = "", y = "")
     
     ggplotly(g, tooltip = "text")
