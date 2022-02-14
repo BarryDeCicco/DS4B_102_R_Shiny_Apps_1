@@ -295,6 +295,20 @@ ggplotly(g, tooltip = "text")
 
 # TODO - plot_forecast()
 
+# Yearly - LM smoother
+
+    data %>% 
+    tk_index() %>% 
+    tk_get_timeseries_summary() %>% 
+    pull(scale)
+
+    # only 1 Prediction - points:
+
+    n_predictions <- data %>% 
+        filter(key == "Prediction") %>% 
+        nrow()
+    
+    
 data <- processed_data_tbl %>%
     aggregate_time_series(time_unit = "year") %>%
     generate_forecast(n_future = 2, seed = 123)
@@ -305,8 +319,8 @@ plot_forecast <- function(data) {
         ggplot(aes(date, total_sales, color = key)) +
         
         geom_line() +
-        geom_point(aes(text = label_text), size = 0.01) +
-        geom_smooth(method = "loess", span = 0.2) +
+    #    geom_point(aes(text = label_text), size = 0.01) +
+    #    geom_smooth(method = "loess", span = 0.2) +
         
         theme_tq() +
         scale_color_tq() +
@@ -314,13 +328,31 @@ plot_forecast <- function(data) {
         expand_limits(y = 0) +
         labs(x = "", y = "")
     
+    # Yearly - LM Smoother
+    
+    if(time_scale=="Year") {
+        g <- g + 
+            geom_smooth(method = "lm")
+    } else {
+        g <- g + geom_smooth(method = "loess", span = 0.2)        
+        
+    }
+    
+    # If only one prediction:
+    
+    if(n_predictions == 1) {
+        g <- g + geom_point(aes(text = label_text), size = 1)
+    } else {
+        g <- g + geom_point(aes(text = label_text), size = 0.01)
+    
+    }
     ggplotly(g, tooltip = "text")
     
 }
 
 processed_data_tbl %>%
-    aggregate_time_series(time_unit = "year") %>%
-    generate_forecast(n_future = 2, seed = 123) %>%
+    aggregate_time_series(time_unit = "day") %>%
+    generate_forecast(n_future = 365, seed = 123) %>%
     plot_forecast()
 
 
