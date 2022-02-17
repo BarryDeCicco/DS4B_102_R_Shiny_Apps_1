@@ -217,34 +217,33 @@ generate_forecast <- function(data, n_future = 12, seed = NULL) {
         tk_index() %>%
         tk_make_future_timeseries(n_future = n_future, inspect_weekdays = TRUE, inspect_months = TRUE) %>%
         tk_get_timeseries_signature() 
-
-    time_scale <- data %>% 
-        tk_index() %>% 
-        tk_get_timeseries_summary() %>% 
+    
+    time_scale <- data %>%
+        tk_index() %>%
+        tk_get_timeseries_summary() %>%
         pull(scale)
     
     if (time_scale == "year") {
         
-        model <- linear_reg(mode = "regression") %>% 
-            set_engine(engine = "lm") %>% 
-            fit.model_spec(total_sales ~ ., data = train_tbl %>% dplyr::select(total_sales, index.num))
- 
+        model <- linear_reg(mode = "regression") %>%
+            set_engine(engine = "lm") %>%
+            fit.model_spec(total_sales ~ ., data = train_tbl %>% select(total_sales, index.num))
+        
     } else {
         seed <- seed
         set.seed(seed)
         model <- boost_tree(
-                mode = "regression", 
-                mtry = 20, 
-                trees = 500, 
-                min_n = 3, 
-                tree_depth = 8, 
-                learn_rate = 0.01, 
+                mode = "regression",
+                mtry = 20,
+                trees = 500,
+                min_n = 3,
+                tree_depth = 8,
+                learn_rate = 0.01,
                 loss_reduction = 0.01) %>%
             set_engine(engine = "xgboost") %>%
             fit.model_spec(total_sales ~ ., data = train_tbl %>% select(-date, -label_text, -diff))
-        }
-        
- # The if-else block above will return a 'model', which is XGBoost or a linear regression   
+    }
+    
     
     prediction_tbl <- predict(model, new_data = future_data_tbl) %>%
         bind_cols(future_data_tbl) %>%
@@ -259,10 +258,9 @@ generate_forecast <- function(data, n_future = 12, seed = NULL) {
         add_column(key = "Actual") %>%
         bind_rows(prediction_tbl) 
     
-    output_tbl
-    
     return(output_tbl)
 }
+
 
 processed_data_tbl %>%
     aggregate_time_series(time_unit = "year") %>%
@@ -274,8 +272,8 @@ processed_data_tbl %>%
 
 # TODO - plot
 data <- processed_data_tbl %>%
-    aggregate_time_series(time_unit = "year") %>%
-    generate_forecast(n_future = 2, seed = 123) 
+    aggregate_time_series(time_unit = "month") %>%
+    generate_forecast(n_future = 12, seed = 123) 
 
 g <- data %>%
     ggplot(aes(date, total_sales, color = key)) +
@@ -295,32 +293,30 @@ ggplotly(g, tooltip = "text")
 
 # TODO - plot_forecast()
 
-# Yearly - LM smoother
-
-    data %>% 
-    tk_index() %>% 
-    tk_get_timeseries_summary() %>% 
-    pull(scale)
-
-    # only 1 Prediction - points:
-
-    n_predictions <- data %>% 
-        filter(key == "Prediction") %>% 
-        nrow()
-    
-    
 data <- processed_data_tbl %>%
     aggregate_time_series(time_unit = "year") %>%
-    generate_forecast(n_future = 2, seed = 123)
+    generate_forecast(n_future = 1, seed = 123)
 
 plot_forecast <- function(data) {
+    
+    # Yearly - LM Smoother
+    time_scale <- data %>%
+        tk_index() %>%
+        tk_get_timeseries_summary() %>%
+        pull(scale)
+    
+    # Only 1 Prediction - points
+    n_predictions <- data %>%
+        filter(key == "Prediction") %>%
+        nrow()
+    
     
     g <- data %>%
         ggplot(aes(date, total_sales, color = key)) +
         
         geom_line() +
-    #    geom_point(aes(text = label_text), size = 0.01) +
-    #    geom_smooth(method = "loess", span = 0.2) +
+        # geom_point(aes(text = label_text), size = 0.01) +
+        # geom_smooth(method = "loess", span = 0.2) +
         
         theme_tq() +
         scale_color_tq() +
@@ -329,25 +325,21 @@ plot_forecast <- function(data) {
         labs(x = "", y = "")
     
     # Yearly - LM Smoother
-    
-    if(time_scale=="Year") {
-        g <- g + 
+    if (time_scale == "year") {
+        g <- g +
             geom_smooth(method = "lm")
     } else {
-        g <- g + geom_smooth(method = "loess", span = 0.2)        
-        
+        g <- g + geom_smooth(method = "loess", span = 0.2)
     }
     
-    # If only one prediction:
-    
-    if(n_predictions == 1) {
+    # Only 1 Prediction
+    if (n_predictions == 1) {
         g <- g + geom_point(aes(text = label_text), size = 1)
     } else {
         g <- g + geom_point(aes(text = label_text), size = 0.01)
-    
     }
-    ggplotly(g, tooltip = "text")
     
+    ggplotly(g, tooltip = "text")
 }
 
 processed_data_tbl %>%
