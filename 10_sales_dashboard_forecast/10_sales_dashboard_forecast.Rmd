@@ -20,6 +20,10 @@ library(tidyquant)
 # Interactive Visualizations
 library(plotly)
 
+# Modeling
+library(parsnip)
+library(timetk)
+
 # Database
 library(odbc)
 library(RSQLite)
@@ -94,6 +98,14 @@ shinyWidgets::pickerInput(
     `selected-text-format` = "count > 3"
   )
 )
+# FORECAST MODE ------
+
+br()
+hr()
+br()
+
+
+# APPLY BUTTONS ------
 
 br()
 hr()
