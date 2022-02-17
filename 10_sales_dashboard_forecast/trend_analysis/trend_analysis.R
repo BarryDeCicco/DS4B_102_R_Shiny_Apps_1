@@ -51,7 +51,7 @@ dbDisconnect(con)
 
 processed_data_tbl %>%
     aggregate_time_series("month") %>%
-    generate_forecast(n_future = 24) %>%
+    generate_forecast(n_future = 24, seed = 123) %>%
     plot_forecast()
 
 
