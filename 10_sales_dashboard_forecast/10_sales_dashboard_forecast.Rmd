@@ -104,6 +104,9 @@ br()
 hr()
 br()
 
+h4("Forecast Mode")
+switchInput(inputId = "forecast_mode")
+
 
 # APPLY BUTTONS ------
 
