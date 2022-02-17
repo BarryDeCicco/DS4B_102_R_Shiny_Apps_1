@@ -57,10 +57,10 @@ processed_data_tbl %>%
 
 # 3.1 XGBOOST ----
 
-source("10_sales_dashboard_forecast/model_forecast_xgb.R")
+source("10_sales_dashboard_forecast/trend_analysis/model_forecast_xgb.R")
 
 processed_data_tbl %>%
-    aggregate_time_series("week") %>%
+    aggregate_time_series("month") %>%
     generate_forecast_xgb(n_future = 200, seed = 123, 
                           mtry = 30, 
                           trees = 500, 
