@@ -29,6 +29,15 @@ library(odbc)
 library(RSQLite)
 ```
 
+```{css}
+.bootstrap-switch .bootstrap-switch-handle-on,
+.bootstrap-switch .bootstrap-switch-handle-off,
+.bootstrap-switch .bootstrap-switch-label {
+    display: inline-block;
+    vertical-align: baseline;
+}
+``` 
+
 ```{r}
 con <- dbConnect(RSQLite::SQLite(), "../00_data/bikes_database.db")
 # con <- dbConnect(RSQLite::SQLite(), "00_data/bikes_database.db")
