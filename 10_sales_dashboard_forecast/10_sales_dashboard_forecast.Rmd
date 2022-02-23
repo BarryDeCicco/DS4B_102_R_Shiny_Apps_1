@@ -173,6 +173,12 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
     inputId = "picker_category_2", 
     selected = unique(processed_data_tbl$category_2))
   
+    updatePickerInput(
+    session = session, 
+    inputId = "picker_bikeshop_name", 
+    selected = unique(processed_data_tbl$bikeshop.name))
+  
+  
   updateDateRangeInput(
     session = session, 
     inputId = "date_range", 
