@@ -229,7 +229,9 @@ processed_data_filtered_tbl <- eventReactive(
   
       filter(category_1 %in% input$checkbox_category_1) %>%
       
-      filter(category_2 %in% input$picker_category_2)
+      filter(category_2 %in% input$picker_category_2) %>% 
+      
+      filter(bikehop.name %in% input$picker_bikeshop_name)
   },
   ignoreNULL = FALSE
 )
