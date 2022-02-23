@@ -377,26 +377,26 @@ time_plot_predictions_tbl <- eventReactive(eventExpr = input$apply, {
 })
 
 
-renderPrint(time_plot_predictions_tbl())
+# renderPrint(time_plot_predictions_tbl())
 
-# output$plotly_2 <- renderPlotly({
-#   
-#   g <- time_plot_tbl() %>%
-#     ggplot(aes(date, total_sales)) +
-#   
-#     geom_line(color = "#2c3e50") +
-#     geom_point(aes(text = label_text), color = "#2c3e50", size = 0.1) +
-#     geom_smooth(method = "loess", span = 0.2) +
-#   
-#     theme_tq() +
-#     expand_limits(y = 0) +
-#     scale_y_continuous(labels = scales::dollar_format()) +
-#     labs(x = "", y = "")
-#   
-#   ggplotly(g, tooltip = "text") %>%
-#     layout(margin = list(b = 200))
-#   
-# })
+output$plotly_2 <- renderPlotly({
+
+  g <- time_plot_tbl() %>%
+    ggplot(aes(date, total_sales)) +
+
+    geom_line(color = "#2c3e50") +
+    geom_point(aes(text = label_text), color = "#2c3e50", size = 0.1) +
+    geom_smooth(method = "loess", span = 0.2) +
+
+    theme_tq() +
+    expand_limits(y = 0) +
+    scale_y_continuous(labels = scales::dollar_format()) +
+    labs(x = "", y = "")
+
+  ggplotly(g, tooltip = "text") %>%
+    layout(margin = list(b = 200))
+
+})
 
 plotlyOutput(outputId = "plotly_2")
   
