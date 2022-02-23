@@ -125,11 +125,11 @@ switchInput(
 
 conditionalPanel(
     condition="input.forecast_mode == 1", 
-    numericInput(inputID = "n_future",
-                 label   = "Forecase Horizon",
+    numericInput(inputId = "n_future",
+                 label   = "Forecast Horizon",
                  value   = 12,
                  min     =  1)
-)
+                )
 
 # APPLY BUTTONS ------
 
