@@ -110,6 +110,23 @@ shinyWidgets::pickerInput(
     `selected-text-format` = "count > 3"
   )
 )
+
+shinyWidgets::pickerInput(
+  inputId  = "picker_bikeshop_name", 
+  label    = h4("Bike Shop (Customer)"), 
+  choices  = unique(processed_data_tbl$bikeshop.name), 
+  selected = unique(processed_data_tbl$bikeshop.name), 
+  multiple = TRUE,
+  options  = list(
+    `actions-box` = TRUE,
+    size = 10,
+    `selected-text-format` = "count > 3"
+  )
+)
+
+
+
+
 # FORECAST MODE ------
 
 
