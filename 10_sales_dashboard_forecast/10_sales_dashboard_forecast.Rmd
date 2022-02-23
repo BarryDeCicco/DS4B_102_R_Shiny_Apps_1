@@ -264,7 +264,8 @@ renderValueBox({
 renderValueBox({
   
   valueBox(
-    value   = summary_values_tbl()$wealth_metric, 
+    value   = summary_values_tbl()$wealth_metric%>% 
+        scales::dollar(scale = 1E-6, suffix = "M", accuracy = 0.1),  
     caption = "Sales", 
     icon    = "fa-money-check-alt", 
     color   = "primary")
