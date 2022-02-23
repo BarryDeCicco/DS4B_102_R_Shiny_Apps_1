@@ -367,9 +367,7 @@ time_plot_tbl <- reactive({
 
 })
   
-# renderPrint({
-#   time_plot_tbl()
-# })
+
 
 output$plotly_2 <- renderPlotly({
   
