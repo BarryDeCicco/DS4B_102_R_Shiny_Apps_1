@@ -249,8 +249,8 @@ renderValueBox({
     caption = "Orders", 
     icon    = "fa-heartbeat", 
     color   = case_when(summary_values_tbl()$health_metric < 200 ~ "danger",
-                        summary_values_tbl()$health_metric < 500 ~ "warning"),
-                        TRUE ~ "success")
+                        summary_values_tbl()$health_metric < 500 ~ "warning",
+                        TRUE ~ "success"))
   
 })
 
