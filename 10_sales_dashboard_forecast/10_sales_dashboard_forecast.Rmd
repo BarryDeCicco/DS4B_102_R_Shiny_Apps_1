@@ -117,7 +117,7 @@ h4("Forecast Mode")
 switchInput(
     inputId = "forecast_mode", 
     handleWidth = 80, 
-#    labelwidth = 80,
+    labelWidth = 80,
     inline = TRUE,
     width = "150px")
 
