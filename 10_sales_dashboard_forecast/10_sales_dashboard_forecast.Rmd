@@ -382,11 +382,11 @@ time_plot_predictions_tbl <- eventReactive(eventExpr = input$apply, {
 output$plotly_2 <- renderPlotly({
 
   if(input$forecast_mode){
-      time_plot_predictions_tbl() %>% 
-          plot_forecast()
+    p <-   time_plot_predictions_tbl() %>% 
+           plot_forecast()
   } else {
-      time_plot_tbl() %>% 
-          plot_time_series()
+    p <-   time_plot_tbl() %>% 
+            plot_time_series()
       
   }
 
