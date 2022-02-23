@@ -114,8 +114,8 @@ shinyWidgets::pickerInput(
 shinyWidgets::pickerInput(
   inputId  = "picker_bikeshop_name", 
   label    = h4("Bike Shop (Customer)"), 
-  choices  = unique(processed_data_tbl$bikeshop.name), 
-  selected = unique(processed_data_tbl$bikeshop.name), 
+  choices  = unique(processed_data_tbl$bikeshop.name) %>% sort(), 
+  selected = unique(processed_data_tbl$bikeshop.name) %>% sort(), 
   multiple = TRUE,
   options  = list(
     `actions-box` = TRUE,
@@ -176,7 +176,7 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
     updatePickerInput(
     session = session, 
     inputId = "picker_bikeshop_name", 
-    selected = unique(processed_data_tbl$bikeshop.name))
+    selected = unique(processed_data_tbl$bikeshop.name) %>% sort())
   
   
   updateDateRangeInput(
