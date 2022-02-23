@@ -360,13 +360,29 @@ shinyWidgets::radioGroupButtons(
 # add an observeEvent() function, so that whenever the forecast mode is 'TRUE',
 # clicking on the Time Unit buttons above the plot will immediately change
 # the plot without having to hit the 'apply' button. 
-# Also add a delay, to allow time for the screen to uptate.
+# Also add a delay, to allow time for the screen to update.
 
 observeEvent(eventExpr = input$time_unit,{
     if(input$forecast_mode){
         delay(300, click(id="apply"))
     }
 })
+
+
+# add an observeEvent() function, so that whenever the forecast mode changed',
+# the plot will be changed without having to hit the 'apply' button. 
+# Also add a delay, to allow time for the screen to update.
+# This will only happen once.
+
+
+observeEvent(eventExpr = input$forecast_mode,{
+
+            delay(300, click(id="apply"))
+    }, once = TRUE)
+
+
+
+
 ```
 
 
