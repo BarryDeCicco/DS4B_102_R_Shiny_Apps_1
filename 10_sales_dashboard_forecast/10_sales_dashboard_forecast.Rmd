@@ -225,11 +225,12 @@ summary_values_tbl <- reactive({
       wealth_metric = sum(extended_price),
       wise_metric   = (sum(str_detect(category_1, "Mountain")) / (sum(str_detect(category_1, "Road")) + 0.0001)) %>% 
         round(1)
-    ) %>%
-    mutate(
-      health_metric = health_metric %>% scales::number(big.mark = ","),
-      wealth_metric = wealth_metric %>% scales::dollar(scale = 1e-6, accuracy = 0.1, suffix = "M")
-    )
+    ) 
+    # %>%
+    # mutate(
+    #   health_metric = health_metric %>% scales::number(big.mark = ","),
+    #   wealth_metric = wealth_metric %>% scales::dollar(scale = 1e-6, accuracy = 0.1, suffix = "M")
+    # )
   
 })
 
