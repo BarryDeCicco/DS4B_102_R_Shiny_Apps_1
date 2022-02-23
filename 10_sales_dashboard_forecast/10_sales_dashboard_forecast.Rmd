@@ -164,6 +164,12 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
     inputId = "time_unit", 
     selected = "month"
   )
+
+  updateSwitchInput(
+      session = session,
+      inputId = "forecast_mode",
+      value = FALSE
+  )
   
   shinyjs::delay(ms = 300, expr = {
     shinyjs::click(id = "apply")
