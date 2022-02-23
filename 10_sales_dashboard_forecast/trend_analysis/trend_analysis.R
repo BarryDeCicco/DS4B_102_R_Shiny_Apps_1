@@ -62,7 +62,7 @@ source("10_sales_dashboard_forecast/trend_analysis/model_forecast_xgb.R")
 processed_data_tbl %>%
     aggregate_time_series("month") %>%
     generate_forecast_xgb(n_future = 200, seed = 123, 
-                          mtry = 30, 
+                          mtry = 20, 
                           trees = 500, 
                           min_n = 5, 
                           tree_depth = 6, 
