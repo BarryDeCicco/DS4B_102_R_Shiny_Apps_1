@@ -268,7 +268,9 @@ renderValueBox({
         scales::dollar(scale = 1E-6, suffix = "M", accuracy = 0.1),  
     caption = "Sales", 
     icon    = "fa-money-check-alt", 
-    color   = "primary")
+    color   = case_when(summary_values_tbl()$wealth_metric < 5e6 ~ "danger",
+                        summary_values_tbl()$wealth_metric < 50e6 ~ "warning",
+                        TRUE ~ "success"))
   
 })
 ```
