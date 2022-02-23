@@ -362,19 +362,9 @@ shinyWidgets::radioGroupButtons(
 ```{r}
 time_plot_tbl <- reactive({
   
-  time_unit <- input$time_unit
-  
   processed_data_filtered_tbl() %>%
-    
-    mutate(date = floor_date(order.date, unit = time_unit)) %>%
-    
-    group_by(date) %>%
-    summarize(total_sales = sum(extended_price)) %>%
-    ungroup() %>%
-    
-    mutate(label_text = str_glue("Date: {date}
-                                 Revenue: {scales::dollar(total_sales)}"))
-  
+      aggregate_time_series(time_unit = input$time_unit)
+
 })
   
 # renderPrint({
