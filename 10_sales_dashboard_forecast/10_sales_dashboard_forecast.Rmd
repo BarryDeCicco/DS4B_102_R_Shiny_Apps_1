@@ -168,9 +168,14 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
   updateSwitchInput(
       session = session,
       inputId = "forecast_mode",
-      value = FALSE
+      value  = FALSE
   )
   
+  updateNumericInput(
+      session = session,
+      inputId = "n_future",
+      value   = 12
+  )
   shinyjs::delay(ms = 300, expr = {
     shinyjs::click(id = "apply")
   })
