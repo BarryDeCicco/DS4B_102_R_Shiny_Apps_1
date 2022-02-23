@@ -367,7 +367,7 @@ time_plot_tbl <- reactive({
 
 })
   
-eventReactive(eventExpr = input$apply, {
+time_plot_predictions_tbl <- eventReactive(eventExpr = input$apply, {
     if(input$forecast_mode){
         time_plot_tbl() %>% 
             generate_forecast(n_future = input$n_future, seed = 123)
