@@ -390,6 +390,10 @@ output$plotly_2 <- renderPlotly({
       
   }
 
+# pipr the plot into a layout command, to set the margins better:    
+
+    p %>% layout(margin = libst(b = 200))
+    
 })
 
 plotlyOutput(outputId = "plotly_2")
