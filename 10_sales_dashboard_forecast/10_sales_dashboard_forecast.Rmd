@@ -27,6 +27,9 @@ library(timetk)
 # Database
 library(odbc)
 library(RSQLite)
+
+
+source("../00_scripts/04_demand_forecast.r")
 ```
 
 ```{css}
