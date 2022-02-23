@@ -65,7 +65,7 @@ processed_data_tbl <- processed_data_tbl %>%
              sep = " - ") %>%
     
     select(order.date, order.id, order.line, state, quantity, price,
-           extended_price, category_1:frame_material)
+           extended_price, category_1:frame_material, bikeshop.name)
     
 # processed_data_tbl
 
@@ -285,7 +285,9 @@ renderValueBox({
     value   = summary_values_tbl()$wise_metric, 
     caption = "Ratio, Mountain to Road", 
     icon    = "fa-brain", 
-    color   = "info")
+    color   = case_when(summary_values_tbl()$wise_metric < 0.5  ~ "warning",
+                        summary_values_tbl()$wise_metric < 2.0   ~ "success",
+                        TRUE ~ "warning"))
   
 })
 ```
