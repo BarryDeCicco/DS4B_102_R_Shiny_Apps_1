@@ -1,0 +1,13 @@
+name: Dose_Response_App
+title: Dose_Response_App
+username:
+account: decicco1
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5893105
+bundleId: 5705261
+url: https://decicco1.shinyapps.io/Dose_Response_App/
+when: 1647791561.26565
+lastSyncTime: 1647791561.26565
+asMultiple: FALSE
+asStatic: FALSE
