@@ -305,9 +305,9 @@ data <- eventReactive(
                                              
   valueExpr = {
   
-    processed_data_tbl %>%
+    Drugs_cov %>%
 
-      filter(bikeshop.name %in% input$picker_bikeshop_name)
+      filter(bikeshop.name %in% input$picker_drug_name)
   },
   ignoreNULL = FALSE
 )
