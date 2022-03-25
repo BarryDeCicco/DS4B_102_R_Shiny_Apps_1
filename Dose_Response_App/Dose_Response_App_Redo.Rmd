@@ -472,7 +472,11 @@ plotlyOutput(outputId = "plotly_1")
 ```{r dose-response-workshop-print-filtered-aggregated-data, eval=TRUE}
 
 dataagg_tbl <- reactive({
-
+  
+    dataagg <- data %>% dplyr::group_by(CONCEN.uM) %>% 
+         dplyr::summarise(MEAN = mean(Response,na.rm = T),
+                          SD = SD(Response,na.rm = T)
+                          )
   print(dataagg())
 })
 
