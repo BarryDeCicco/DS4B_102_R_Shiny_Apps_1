@@ -297,7 +297,7 @@ processed_data_filtered_tbl <- eventReactive(
 ```
 
 
-```{R dose-response-workshop-error-bar-figure, eval=FALSE}
+```{R dose-response-workshop-error-bar-figure, eval=TRUE}
 
 error_bar_plot <- eventReactive(
   eventExpr = input$apply, 
@@ -461,24 +461,11 @@ geo_plot_tbl <- reactive({
 ```
 
 
-```{r}
+```{r render-error-bar-plot}
+
 output$plotly_1 <- renderPlotly(expr = {
   
-  geo_plot_tbl() %>%
-    plot_geo(locationmode = "USA-states") %>%
-    add_trace(z         = ~total_revenue, 
-              locations = ~state, 
-              color     = ~total_revenue,
-              text      = ~label_text,
-              colors    = "Blues") %>%
-    layout(
-        geo = list(
-            scope = "usa",
-            projection = list(type = "albers usa"),
-            showlakes  = TRUE,
-            lakecolor  = toRGB("white")
-        )
-    )
+error_bar_plot
   
 })
 
