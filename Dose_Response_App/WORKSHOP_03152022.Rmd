@@ -130,7 +130,7 @@ library(npreg)
 
 ## Read in data sete 
 
-```{R}
+```{modified-R}
 Data = read.csv("C:/Users/mawenjua/OneDrive - Michigan State University/Workshops/Dose-response curve workshop/data.csv")
 ```
 
