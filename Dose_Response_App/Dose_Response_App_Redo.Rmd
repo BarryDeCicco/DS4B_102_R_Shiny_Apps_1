@@ -296,7 +296,7 @@ processed_data_filtered_tbl <- eventReactive(
   ignoreNULL = FALSE
 )
 
-renderPrint(processed_data_filtered_tbl())
+
 
 ```
 
@@ -471,12 +471,14 @@ plotlyOutput(outputId = "plotly_1")
 
 ```{r dose-response-workshop-print-filtered-aggregated-data, eval=FALSE}
 
-dataagg_tbl <- reactive({
+# dataagg_tbl <- reactive({
+# 
+#   print(dataagg())
+# })
+# 
+# renderPrint(dataagg_tbl())
 
-  print(dataagg())
-})
-
-renderPrint(dataagg_tbl())
+renderPrint(dataagg())
 
 
 # renderTable(dataagg())
