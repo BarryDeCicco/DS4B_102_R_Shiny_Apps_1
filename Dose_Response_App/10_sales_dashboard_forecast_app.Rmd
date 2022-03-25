@@ -89,7 +89,6 @@ dose_response_df <- read.csv("data.csv", header = TRUE)
 
 ```
 
-# Run ANOVA and Extract P-values
 
 ```{R dose-response-workshop-run-ANOVA-get-p-values}
 
