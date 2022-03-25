@@ -474,7 +474,7 @@ plotlyOutput(outputId = "plotly_1")
 dataagg_tbl <- reactive({
   
     
-    print(data)
+    print(data())
    # data %>% dplyr::group_by(CONCEN.uM) %>% 
    #       dplyr::summarise(MEAN = mean(Response,na.rm = T),
    #                        SD = SD(Response,na.rm = T)
