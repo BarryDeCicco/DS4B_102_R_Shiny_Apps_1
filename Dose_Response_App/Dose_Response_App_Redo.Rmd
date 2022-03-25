@@ -411,7 +411,7 @@ Row {data-height=850}
 
 ### By State
 
-```{r}
+```{r, eval=FALSE}
 
 geo_plot_tbl <- reactive({
 
@@ -435,7 +435,7 @@ geo_plot_tbl <- reactive({
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 output$plotly_1 <- renderPlotly(expr = {
   
   geo_plot_tbl() %>%
