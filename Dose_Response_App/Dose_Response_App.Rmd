@@ -296,8 +296,8 @@ processed_data_filtered_tbl <- eventReactive(
 )
 ```
 
-```{r, eval=FALSE }
-processed_data_filtered_tbl <- eventReactive(
+```{r dose-response-workshop-filter-dose-response-data-set, eval=TRUE }
+data <- eventReactive(
   eventExpr = input$apply, 
                                              
   valueExpr = {
