@@ -131,8 +131,13 @@ library(npreg)
 ## Read in data sete 
 
 ```{modified-R}
-Data = read.csv("C:/Users/mawenjua/OneDrive - Michigan State University/Workshops/Dose-response curve workshop/data.csv")
+
+# Data = read.csv("C:/Users/mawenjua/OneDrive - Michigan State University/Workshops/Dose-response curve workshop/data.csv")
+
+Data <-  read.csv(file = here::here("Dose_Response_App/data.CSV"))
+
 ```
+
 
 # Run ANOVA and Extract P-values
 
