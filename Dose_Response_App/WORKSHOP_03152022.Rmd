@@ -67,7 +67,7 @@ Dates in this section use the MM/DD/YY format.
 
 Set global R chunk options (local chunk options will over-ride global options). 
 
-``` {r global_options}
+``` {r modified-global_options}
 # Global chunk options (must be a stand-alone initial R chunk). 
 knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
                       message = TRUE, warning = TRUE)
