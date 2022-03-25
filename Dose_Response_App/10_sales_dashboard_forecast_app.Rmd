@@ -77,15 +77,14 @@ dbDisconnect(con)
 ```{r dose-response-workshop-import-csv, eval=TRUE}
 
 # if running as an .R file:
-# dose_response_df <- read.csv("Dose_Response_App/data.csv", header = TRUE)
+# Data <- read.csv("Dose_Response_App/data.csv", header = TRUE)
 
 # When running as shiny:
-dose_response_df <- read.csv("data.csv", header = TRUE)
+Data <- read.csv("data.csv", header = TRUE)
 
-# View(dose_response_df)
-# class(dose_response_df)
-# names(dose_response_df)
-# sapply(dose_response_df, class) 
+# class(Data)
+# names(Data)
+# sapply(Data, class) 
 
 ```
 
@@ -94,18 +93,18 @@ dose_response_df <- read.csv("data.csv", header = TRUE)
 
 # Run ANOVA and Extract P-values
 
-dose_response_df$Drug = as.character(dose_response_df$Drug)
-dose_response_df$Drug = tolower(dose_response_df$Drug)
-DRUG.NAME = data.frame(unique(dose_response_df$Drug))
+Data$Drug = as.character(Data$Drug)
+Data$Drug = tolower(Data$Drug)
+DRUG.NAME = data.frame(unique(Data$Drug))
 Drugs_cov = DRUG.NAME
 names(Drugs_cov) = c("DRUG.NAME")
 Drugs_cov$DRUG.NAME = as.character(Drugs_cov$DRUG.NAME)
 
 for (name in Drugs_cov$DRUG.NAME){
-     data = subset(dose_response_df, Drug == name)
-#	   print(summary(aov(lm(dose_response_df$Response ~ dose_response_df$CONCEN.uM))))
+     data = subset(Data, Drug == name)
+#	   print(summary(aov(lm(Data$Response ~ Data$CONCEN.uM))))
 	   Drugs_cov$pvalue[Drugs_cov$DRUG.NAME == name] = 
-	       unlist(summary(aov(lm(dose_response_df$Response ~ dose_response_df$CONCEN.uM))))[9]} 
+	       unlist(summary(aov(lm(Data$Response ~ Data$CONCEN.uM))))[9]} 
 
 for (name in Drugs_cov$DRUG.NAME){
       Drugs_cov$pvaluecut[Drugs_cov$DRUG.NAME == name] = 
