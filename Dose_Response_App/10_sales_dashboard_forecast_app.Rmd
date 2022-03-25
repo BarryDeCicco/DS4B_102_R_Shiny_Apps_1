@@ -118,7 +118,9 @@ for (name in Drugs_cov$DRUG.NAME){
 Column {.sidebar}
 ---------------------------------------------------------------
 
-```{r}
+```{r dose-response-workshop-selection-controls}
+
+
 useShinyjs(rmd = TRUE)
 
 dateRangeInput(
@@ -168,7 +170,18 @@ shinyWidgets::pickerInput(
 )
 
 
-
+shinyWidgets::pickerInput(
+  inputId  = "picker_drug_name", 
+  label    = h4("Drug Name"), 
+  choices  = unique(DRUG.NAME) %>% sort(), 
+  selected = unique(DRUG.NAME) %>% sort(), 
+  multiple = TRUE,
+  options  = list(
+    `actions-box` = TRUE,
+    size = 10,
+    `selected-text-format` = "count > 3"
+  )
+)
 
 # FORECAST MODE ------
 
