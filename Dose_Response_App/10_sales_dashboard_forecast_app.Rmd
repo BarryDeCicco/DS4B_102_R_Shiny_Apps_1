@@ -236,7 +236,7 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
     updatePickerInput(
     session = session, 
     inputId = "picker_drug_name", 
-    selected = unique(Drugs_cov$DRUG.NAME) %>% sort())
+    selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first() )
 
   updateDateRangeInput(
     session = session, 
