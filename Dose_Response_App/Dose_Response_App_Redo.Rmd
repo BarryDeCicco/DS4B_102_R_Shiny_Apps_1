@@ -295,6 +295,9 @@ processed_data_filtered_tbl <- eventReactive(
   },
   ignoreNULL = FALSE
 )
+
+renderPrint(processed_data_filtered_tbl())
+
 ```
 
 
@@ -304,12 +307,14 @@ dataagg <- eventReactive(
   eventExpr = input$apply, 
                                              
   valueExpr = {
-  
-    data <- Data %>% filter(Drug %in% input$picker_drug_name) %>% 
-        dplyr::group_by(CONCEN.uM) %>% 
-        dplyr::summarise(MEAN = mean(Response,na.rm = T),
-                         SD = SD(Response,na.rm = T)
-                         )
+
+    data <- Data %>% filter(Drug %in% input$picker_drug_name)  
+        
+    # data <- Data %>% filter(Drug %in% input$picker_drug_name) %>% 
+    #     dplyr::group_by(CONCEN.uM) %>% 
+    #     dplyr::summarise(MEAN = mean(Response,na.rm = T),
+    #                      SD = SD(Response,na.rm = T)
+    #                      )
       
       # dataagg_temp = cbind(aggregate(data$Response, 
       #               by = list(data$CONCEN.uM), FUN = mean, na.rm = T), 
@@ -468,14 +473,14 @@ plotlyOutput(outputId = "plotly_1")
 
 dataagg_tbl <- reactive({
 
-  glimpse(dataagg())
+  print(dataagg())
 })
-
-
-# renderTable(dataagg())
 
 renderPrint(dataagg_tbl())
 
+
+# renderTable(dataagg())
+# renderPrint(dataagg_tbl())
 # tableOutput(dataagg_tbl())
 
 ```
