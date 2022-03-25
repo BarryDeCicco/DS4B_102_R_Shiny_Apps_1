@@ -474,7 +474,9 @@ dataagg_tbl <- reactive({
 
 # renderTable(dataagg())
 
-renderPrint(dataagg_tbl())
+# renderPrint(dataagg_tbl())
+
+tableOutput(dataagg_tbl())
 
 ```
 
