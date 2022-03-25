@@ -276,6 +276,7 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
 ```
 
 ```{r}
+
 processed_data_filtered_tbl <- eventReactive(
   eventExpr = input$apply, 
                                              
@@ -294,6 +295,7 @@ processed_data_filtered_tbl <- eventReactive(
   },
   ignoreNULL = FALSE
 )
+
 ```
 
 ```{r dose-response-workshop-filter-dose-response-data-set, eval=TRUE }
