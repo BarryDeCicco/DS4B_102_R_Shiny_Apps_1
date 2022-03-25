@@ -299,14 +299,33 @@ processed_data_filtered_tbl <- eventReactive(
 
 ```{R dose-response-workshop-error-bar-figure, eval=FALSE}
 
+error_bar_plot <- eventReactive(
+  eventExpr = input$apply, 
+                                             
+  valueExpr = {
+  
+    dataagg <- Data %>% filter(Drug == input$picker_drug_name) %>% 
+        cbind(aggregate(data$Response, by = list(data$CONCEN.uM), FUN = mean, na.rm = T), 
+              aggregate(data$Response, by = list(data$CONCEN.uM), FUN = sd, na.rm = T)$x)
+    
+    names(dataagg) = c("CONCEN.uM", "MEAN", "SD")
+    figure = ggplot(dataagg, aes(x = CONCEN.uM, y = MEAN)) + scale_x_continuous(name = "CONCEN.uM", trans='log')
+    figure = figure + geom_errorbar(aes(ymin = MEAN - SD, ymax = MEAN + SD), width = .1, color = "green")
+    figure = figure + geom_line(color = "green") + geom_point(color = "green")
+    figure = figure + theme_bw() + theme_classic()
 
-data = subset(Data, Drug == "drug2")
-dataagg = cbind(aggregate(data$Response, by = list(data$CONCEN.uM), FUN = mean, na.rm = T), aggregate(data$Response, by = list(data$CONCEN.uM), FUN = sd, na.rm = T)$x)
-names(dataagg) = c("CONCEN.uM", "MEAN", "SD")
-figure = ggplot(dataagg, aes(x = CONCEN.uM, y = MEAN)) + scale_x_continuous(name = "CONCEN.uM", trans='log')
-figure = figure + geom_errorbar(aes(ymin = MEAN - SD, ymax = MEAN + SD), width = .1, color = "green")
-figure = figure + geom_line(color = "green") + geom_point(color = "green")
-figure = figure + theme_bw() + theme_classic()
+  },
+  ignoreNULL = FALSE
+)
+
+View(error_bar_plot)
+
+# dataagg = cbind(aggregate(data$Response, by = list(data$CONCEN.uM), FUN = mean, na.rm = T), aggregate(data$Response, by = list(data$CONCEN.uM), FUN = sd, na.rm = T)$x)
+# names(dataagg) = c("CONCEN.uM", "MEAN", "SD")
+# figure = ggplot(dataagg, aes(x = CONCEN.uM, y = MEAN)) + scale_x_continuous(name = "CONCEN.uM", trans='log')
+# figure = figure + geom_errorbar(aes(ymin = MEAN - SD, ymax = MEAN + SD), width = .1, color = "green")
+# figure = figure + geom_line(color = "green") + geom_point(color = "green")
+# figure = figure + theme_bw() + theme_classic()
 ```
 
 
