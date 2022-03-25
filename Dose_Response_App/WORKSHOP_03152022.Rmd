@@ -1,0 +1,365 @@
+---
+title: 'Dose response workshop: Analysis'
+author: "Wenjuan Ma"
+date: ''
+output:
+  pdf_document:
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+header-includes:
+- \usepackage{fancyhdr}
+- \usepackage[yyyymmdd,hhmmss]{datetime}
+- \usepackage{lastpage}
+- \usepackage{fontspec}
+- \pagestyle{fancy}
+- \lhead{Data Analysis for liver drug project}
+- \rhead{\today\ \currenttime}
+- \cfoot{ }
+- \fancyfoot[RE,RO]{\thepage\ of \pageref*{LastPage}}
+- \renewcommand{\headrulewidth}{0.4pt}
+- \renewcommand{\footrulewidth}{0.4pt}
+- \fancypagestyle{plain}{\pagestyle{fancy}}
+- \lfoot{\texttt{\small \detokenize{`r paste0(getwd(), "/", sub(".Rmd", ".pdf", knitr:::current_input()))`}}}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+********************************************************************************
+# Document Information
+Folder: *`r getwd()`*  
+
+* Script: *`r knitr:::current_input()`*
+* Output: *`r sub(".Rmd", ".pdf", knitr:::current_input())`*
+
+
+. Sponsor: National Institute of Health: 
+Michigan State University, East Lansing, MI. 
+
+## Purpose
+ 
+
+## Revision History
+Dates in this section use the MM/DD/YY format. 
+
+* 05/13/2019
+* 07/26/2019
+
+## Assumptions
+* We use R Markdown to enhance reproducibility. Knitting the R Markdown script
+  generates the PDF file containing explanatory text, R code, plus R output 
+  (text and graphics) noted in the Document Information section above.
+* We will use RStudio (version 1.1.447 or later, www.rstudio.org) to knit this 
+  script. The software chain looks like this **Rmd file -> RStudio -> R -> knitr 
+  -> pandoc -> MiKTeX -> PDF file**.
+* We are using MiKTeX 2.9 (https://miktex.org). 
+
+********************************************************************************
+# Setup Tasks
+
+Set global R chunk options (local chunk options will over-ride global options). 
+
+``` {r global_options}
+# Global chunk options (must be a stand-alone initial R chunk). 
+knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
+                      message = TRUE, warning = TRUE)
+```
+
+Start from a known state by cleaning the workspace. Then, start timing the 
+script and note the default working directory (where this file is located in our 
+folder structure). Rmarkdown does not preserve setting the working directory 
+across chunks (every chunk defaults to folder where the script is stored).
+
+```{r setup_tasks}
+# Clean the workspace (delete all objects in memory & collect garbage).
+rm(list = ls())
+gc()
+options(scipen = 999)
+# Start timing the analysis.
+print(Timing <- data.frame(Start = Sys.time(), End = NA, Duration = NA))
+
+# Show the default working directory for R chunks in this script.
+getwd()
+```
+
+## Load Packages & Set Options
+Load contributed R packages that we need to get additional functions. 
+
+```{r load_packages}
+library(prettyR)          # for stretch_df()
+library(descr)            # For freq() crosstab().
+options(descr.plot=FALSE) # Make freq() & crosstab() skip plots by default.
+library(lubridate)        # For date conversion, eg. ymd(), time_length().
+library(sjlabelled)       # For set_label(), get_label()
+library(haven)            # For read_sav(), write_sav(), as_factor().
+options(tibble.print_max = Inf)  # Show all rows by default. 
+options(tibble.width = Inf)      # Show all columns by default
+library(plyr)             # For ddply()
+library(knitr)            # for kable()
+library(car)              # For recode()
+library(dplyr)            # For recode(), arrange(), distinct()
+library(Hmisc)            # For Cs()
+library(foreign)          # For write.foreign()
+library(stringr)  # For the str_replace_all() and str_count() functions.
+library(tidyr)            # For gather()
+library(ggplot2)          # For ggplot()
+library(knitr)            # For kable() 
+library(kableExtra)       # For kable title
+library(stringr)          # For gsub()
+library(lattice)
+library(ggplot2)
+library(reshape2)
+library(drc)
+library(npreg)
+```
+
+## Read in data sete 
+
+```{R}
+Data = read.csv("C:/Users/mawenjua/OneDrive - Michigan State University/Workshops/Dose-response curve workshop/data.csv")
+```
+
+# Run ANOVA and Extract P-values
+
+```{R}
+Data$Drug = as.character(Data$Drug)
+Data$Drug = tolower(Data$Drug)
+DRUG.NAME = data.frame(unique(Data$Drug))
+Drugs_cov = DRUG.NAME
+names(Drugs_cov) = c("DRUG.NAME")
+Drugs_cov$DRUG.NAME = as.character(Drugs_cov$DRUG.NAME)
+
+for (name in Drugs_cov$DRUG.NAME){
+     data = subset(Data, Drug == name)
+	   print(summary(aov(lm(data$Response ~ data$CONCEN.uM))))
+	   Drugs_cov$pvalue[Drugs_cov$DRUG.NAME == name] = unlist(summary(aov(lm(data$Response ~ data$CONCEN.uM))))[9]} 
+
+for (name in Drugs_cov$DRUG.NAME){
+      Drugs_cov$pvaluecut[Drugs_cov$DRUG.NAME == name] = ifelse(Drugs_cov$pvalue[Drugs_cov$DRUG.NAME == name] <= 0.01, "p <= 0.01", "p > 0.01")}
+```
+
+# Error bar figure
+
+```{R}
+data = subset(Data, Drug == "drug2")
+dataagg = cbind(aggregate(data$Response, by = list(data$CONCEN.uM), FUN = mean, na.rm = T), aggregate(data$Response, by = list(data$CONCEN.uM), FUN = sd, na.rm = T)$x)
+names(dataagg) = c("CONCEN.uM", "MEAN", "SD")
+figure = ggplot(dataagg, aes(x = CONCEN.uM, y = MEAN)) + scale_x_continuous(name = "CONCEN.uM", trans='log')
+figure = figure + geom_errorbar(aes(ymin = MEAN - SD, ymax = MEAN + SD), width = .1, color = "green")
+figure = figure + geom_line(color = "green") + geom_point(color = "green")
+figure = figure + theme_bw() + theme_classic()
+```
+
+# Run Does-response curve models for the drugs have significant ANOVA
+
+```{R}
+# 3-parameter log-logistic model
+# Drug 2
+name = "drug2"
+data = subset(Data, Drug == "drug2")
+
+m1_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = LL.3u(upper = 100))
+summary(m1_d1)
+AIC(m1_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = LL.3u(upper = 100)), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+
+# 4-parameter log-logistic model
+m2_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = LL.4())
+summary(m2_d1)
+AIC(m2_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = LL.4()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+# 3-parameter asymptotic regression model
+m3_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = AR.3())
+summary(m3_d1)
+AIC(m3_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = AR.3()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+# 3-parameter exponential model
+m4_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = EXD.3())
+summary(m4_d1)
+AIC(m4_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = EXD.3()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+# two 3 parameter Weibull models
+m5_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = W1.3())
+summary(m5_d1)
+AIC(m5_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = W1.3()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+# two 3-parameter Weibull models
+m6_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = W2.3())
+summary(m6_d1)
+AIC(m6_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = W2.3()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+# 4-parameter Weibull models
+m7_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = W1.4())
+summary(m7_d1)
+AIC(m7_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = W1.4()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+# 4-parameter Weibull model
+m8_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = W2.4())
+summary(m8_d1)
+AIC(m8_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = W2.4()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+# 3-parameter Gompertz model
+m9_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = G.3())
+summary(m9_d1)
+AIC(m9_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = G.3()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+# 4-parameter Gompertz model
+m10_d1 = drm(Response ~ CONCEN.uM, data = na.omit(data), fct = G.4())
+summary(m10_d1)
+AIC(m10_d1)
+
+ED(drm(Response ~ CONCEN.uM, data = na.omit(data), fct = G.4()), mean(data$Response), type = "absolute", display = TRUE, multcomp = FALSE)[1]
+
+```
+
+# Figures
+
+```{R}
+name = "drug2"
+data = subset(Data, Drug == "drug2")
+figure = ggplot(data, aes(x = CONCEN.uM, y = Response)) + geom_point()
+figure = figure + scale_x_continuous(name = paste("[", capitalize(name), "]", " (uM)"), trans='log') + scale_y_continuous(name = "Response", limits = c(0, max(data$Response)))
+figure = figure + theme_bw() + theme_classic()
+Con = data.frame(seq(min(data$CONCEN.uM), max(data$CONCEN.uM), length.out = 1000))
+Fit1 = data.frame(predict(m1_d1, newdata = Con))
+Fit1 = data.frame(Con, Fit1)
+names(Fit1) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit1, color = "red")
+
+Fit2 = data.frame(predict(m2_d1, newdata = Con))
+Fit2 = data.frame(Con, Fit2)
+names(Fit2) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit2, color = "blue")
+
+Fit3 = data.frame(predict(m3_d1, newdata = Con))
+Fit3 = data.frame(Con, Fit3)
+names(Fit3) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit3, color = "green")
+
+Fit4 = data.frame(predict(m4_d1, newdata = Con))
+Fit4 = data.frame(Con, Fit4)
+names(Fit4) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit4, color = "purple")
+
+Fit5 = data.frame(predict(m5_d1, newdata = Con))
+Fit5 = data.frame(Con, Fit5)
+names(Fit5) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit5, color = "cyan")
+
+Fit6 = data.frame(predict(m6_d1, newdata = Con))
+Fit6 = data.frame(Con, Fit6)
+names(Fit6) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit6, color = "darkgoldenrod")
+
+Fit7 = data.frame(predict(m7_d1, newdata = Con))
+Fit7 = data.frame(Con, Fit7)
+names(Fit7) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit7, color = "firebrick1")
+
+Fit8 = data.frame(predict(m8_d1, newdata = Con))
+Fit8 = data.frame(Con, Fit8)
+names(Fit8) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit8, color = "deeppink1")
+
+Fit9 = data.frame(predict(m9_d1, newdata = Con))
+Fit9 = data.frame(Con, Fit9)
+names(Fit9) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit9, color = "darkorchid4")
+
+Fit10 = data.frame(predict(m10_d1, newdata = Con))
+Fit10 = data.frame(Con, Fit10)
+names(Fit10) = c("CONCEN.uM", "Response")
+figure = figure + geom_line(data = Fit10, color = "darkgreen") 
+```
+
+# Smooth spline using ss function in npreg package
+## Essentially these are a group of local functions connected by knots 
+## The functions could be linear or cubic or other types
+
+```{R}
+data$CONCEN.uM1 = data$CONCEN.uM
+data$CONCEN.uM1[data$CONCEN.uM == 0] = 0.001
+data$logCONCEN.uM = log(data$CONCEN.uM1)
+
+# Linear
+mod.sslin = with(data, npreg::ss(logCONCEN.uM, Response, nknots = 9, m =  1))
+summary(mod.sslin)
+
+plot(mod.sslin, xlab = "CONCEN.uM", ylab = "Response")
+points(data$logCONCEN.uM, data$Response)
+xval = approx(x = mod.sslin$y, y = mod.sslin$x, xout = mean(data$Response))$y
+exp(xval)
+
+
+# Cubic
+mod.sscub = with(data, npreg::ss(logCONCEN.uM, Response, nknots = 9, m = 2))
+summary(mod.sscub)
+
+plot(mod.sscub, xlab = "CONCEN.uM", ylab = "Response")
+points(data$logCONCEN.uM, data$Response)
+xval = approx(x = mod.sscub$y, y = mod.sscub$x, xout = mean(data$Response))$y
+exp(xval)
+
+
+# quintic
+mod.ssqui = with(data, npreg::ss(logCONCEN.uM, Response, nknots = 9, m = 3))
+summary(mod.ssqui)
+
+plot(mod.ssqui, xlab = "CONCEN.uM", ylab = "Response")
+points(data$logCONCEN.uM, data$Response)
+xval = approx(x = mod.ssqui$y, y = mod.ssqui$x, xout = mean(data$Response))$y
+exp(xval)
+```
+
+
+********************************************************************************
+# Wrap Up
+## Show Citations & Version Information
+``` {r show_citations}
+sessionInfo()
+citation("prettyR")
+citation("descr")
+citation("lubridate")
+citation("sjlabelled")
+citation("haven")
+citation("plyr")
+citation("knitr")
+citation("car")
+citation("dplyr")
+citation("npreg")
+citation("drc")
+```
+
+## Show Timing
+``` {r show_timing}
+# Show when script started, when it completed, & how long it took to run.
+print(Timing <- within(Timing, {End <- Sys.time(); Duration <- End - Start}))
+
+# END OF SCRIPT.
+```
