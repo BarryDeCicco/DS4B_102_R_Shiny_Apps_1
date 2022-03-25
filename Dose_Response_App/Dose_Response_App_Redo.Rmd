@@ -347,7 +347,7 @@ summary_values_tbl <- reactive({
   
 })
 
-# renderPrint(summary_values_tbl())
+renderPrint(summary_values_tbl())
 
 ```
 
@@ -462,12 +462,13 @@ plotlyOutput(outputId = "plotly_1")
 
 ```{r dose-response-workshop-print-filtered-aggregated-data, eval=TRUE}
 
-dataagg_tbl <- reactive({
+# dataagg_tbl <- reactive({
+# 
+#   print(glimpse(dataagg()))
+# })
 
-  dataagg() 
-})
 
-renderPrint(dataagg_tbl())
+# renderTable(dataagg())
 
 ```
 
