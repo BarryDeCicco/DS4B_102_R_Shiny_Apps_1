@@ -71,7 +71,14 @@ Set global R chunk options (local chunk options will over-ride global options).
 # Global chunk options (must be a stand-alone initial R chunk). 
 knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
                       message = TRUE, warning = TRUE)
+
+# Declare path to this script relative to the project root directory.
+here::i_am(
+  path = "Dose_Response_App/WORKSHOP_03152022.Rmd"
+  )
 ```
+
+
 
 Start from a known state by cleaning the workspace. Then, start timing the 
 script and note the default working directory (where this file is located in our 
