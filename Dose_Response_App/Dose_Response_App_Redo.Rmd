@@ -143,6 +143,10 @@ shinyWidgets::pickerInput(
   )
 )
 
+    updatePickerInput(
+    session = session, 
+    inputId = "picker_drug_name", 
+    selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first() )
 
 
 
