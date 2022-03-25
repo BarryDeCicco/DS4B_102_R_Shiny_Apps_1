@@ -316,6 +316,9 @@ dataagg <- eventReactive(
   },
   ignoreNULL = FALSE
 )
+
+View(dataagg)
+
 ```
 
 
