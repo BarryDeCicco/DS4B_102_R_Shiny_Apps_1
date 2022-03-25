@@ -477,7 +477,7 @@ dataagg_tbl <- reactive({
          dplyr::summarise(MEAN = mean(Response,na.rm = T),
                           SD = SD(Response,na.rm = T)
                           )
-
+  print()
 })
 
 renderPrint(dataagg_tbl())
