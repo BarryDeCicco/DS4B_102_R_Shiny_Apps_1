@@ -462,7 +462,7 @@ plotlyOutput(outputId = "plotly_1")
 
 ```{r dose-response-workshop-print-filtered-aggregated-data, eval=TRUE}
 
-renderPrint(dataagg)
+textOutput(dataagg)
 
 ```
 
