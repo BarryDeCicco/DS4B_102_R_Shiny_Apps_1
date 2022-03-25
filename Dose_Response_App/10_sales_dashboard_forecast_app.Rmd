@@ -330,7 +330,7 @@ View(error_bar_plot)
 
 
 
-```{r dose-response-workshop-filter-dose-response-data-set}
+```{r dose-response-workshop-filter-dose-response-data-set, eval=FALSE}
 processed_data_filtered_tbl <- eventReactive(
   eventExpr = input$apply, 
                                              
