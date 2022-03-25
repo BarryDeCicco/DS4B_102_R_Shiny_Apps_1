@@ -305,9 +305,7 @@ dataagg <- eventReactive(
                                              
   valueExpr = {
   
-    Data %>%
-
-      filter(Drug %in% input$picker_drug_name) %>% 
+    data <- Data %>% filter(Drug %in% input$picker_drug_name)  
       
       dataagg = cbind(aggregate(data$Response, 
                     by = list(data$CONCEN.uM), FUN = mean, na.rm = T), 
