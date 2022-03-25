@@ -173,8 +173,8 @@ shinyWidgets::pickerInput(
   inputId  = "picker_drug_name", 
   label    = h4("Drug Name"), 
   choices  = unique(Drugs_cov$DRUG.NAME) %>% sort(), 
-  selected = unique(Drugs_cov$DRUG.NAME) %>% sort(), 
-  multiple = TRUE,
+  selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first(), 
+  multiple = FALSE,
   options  = list(
     `actions-box` = TRUE,
     size = 10,
@@ -295,6 +295,20 @@ processed_data_filtered_tbl <- eventReactive(
   ignoreNULL = FALSE
 )
 ```
+
+
+```{R dose-response-workshop-error-bar-figure, eval=FALSE}
+
+
+data = subset(Data, Drug == "drug2")
+dataagg = cbind(aggregate(data$Response, by = list(data$CONCEN.uM), FUN = mean, na.rm = T), aggregate(data$Response, by = list(data$CONCEN.uM), FUN = sd, na.rm = T)$x)
+names(dataagg) = c("CONCEN.uM", "MEAN", "SD")
+figure = ggplot(dataagg, aes(x = CONCEN.uM, y = MEAN)) + scale_x_continuous(name = "CONCEN.uM", trans='log')
+figure = figure + geom_errorbar(aes(ymin = MEAN - SD, ymax = MEAN + SD), width = .1, color = "green")
+figure = figure + geom_line(color = "green") + geom_point(color = "green")
+figure = figure + theme_bw() + theme_classic()
+```
+
 
 
 ```{r dose-response-workshop-filter-dose-response-data-set}
