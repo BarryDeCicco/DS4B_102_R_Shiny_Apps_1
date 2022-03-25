@@ -76,10 +76,17 @@ dbDisconnect(con)
 
 ```{r dose-response-workshop-import-csv, eval=TRUE}
 
-dose_response_df <- read.csv("data.csv",
-                             header = TRUE)
+# if running as an .R file:
+# dose_response_df <- read.csv("Dose_Response_App/data.csv", header = TRUE)
+
+# When running as shiny:
+dose_response_df <- read.csv("data.csv", header = TRUE)
 
 # View(dose_response_df)
+# class(dose_response_df)
+# names(dose_response_df)
+# sapply(dose_response_df, class) 
+
 ```
 
 Column {.sidebar}
