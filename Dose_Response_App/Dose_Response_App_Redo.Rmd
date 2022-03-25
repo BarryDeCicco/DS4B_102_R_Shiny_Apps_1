@@ -469,14 +469,14 @@ plotlyOutput(outputId = "plotly_1")
 
 ```
 
-```{r dose-response-workshop-print-filtered-aggregated-data, eval=FALSE}
+```{r dose-response-workshop-print-filtered-aggregated-data, eval=TRUE}
 
-# dataagg_tbl <- reactive({
-# 
-#   print(dataagg())
-# })
-# 
-# renderPrint(dataagg_tbl())
+dataagg_tbl <- reactive({
+
+  print(dataagg())
+})
+
+renderPrint(dataagg_tbl())
 
 renderPrint(Data())
 
