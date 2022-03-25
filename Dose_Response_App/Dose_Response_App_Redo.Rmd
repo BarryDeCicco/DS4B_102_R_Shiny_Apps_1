@@ -478,7 +478,7 @@ plotlyOutput(outputId = "plotly_1")
 # 
 # renderPrint(dataagg_tbl())
 
-renderPrint(dataagg())
+renderPrint(Data())
 
 
 # renderTable(dataagg())
