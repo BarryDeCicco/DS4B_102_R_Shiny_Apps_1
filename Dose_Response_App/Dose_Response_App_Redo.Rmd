@@ -90,6 +90,29 @@ Data <- read.csv("data.csv", header = TRUE)
 ```
 
 
+```{R dose-response-workshop-run-ANOVA-get-p-values}
+
+# Run ANOVA and Extract P-values
+
+Data$Drug = as.character(Data$Drug)
+Data$Drug = tolower(Data$Drug)
+DRUG.NAME = data.frame(unique(Data$Drug))
+Drugs_cov = DRUG.NAME
+names(Drugs_cov) = c("DRUG.NAME")
+Drugs_cov$DRUG.NAME = as.character(Drugs_cov$DRUG.NAME)
+
+for (name in Drugs_cov$DRUG.NAME){
+     data = subset(Data, Drug == name)
+#	   print(summary(aov(lm(Data$Response ~ Data$CONCEN.uM))))
+	   Drugs_cov$pvalue[Drugs_cov$DRUG.NAME == name] = 
+	       unlist(summary(aov(lm(Data$Response ~ Data$CONCEN.uM))))[9]} 
+
+for (name in Drugs_cov$DRUG.NAME){
+      Drugs_cov$pvaluecut[Drugs_cov$DRUG.NAME == name] = 
+          ifelse(Drugs_cov$pvalue[Drugs_cov$DRUG.NAME == name] <= 0.01, "p <= 0.01", "p > 0.01")}
+
+```
+
 
 Column {.sidebar}
 ---------------------------------------------------------------
