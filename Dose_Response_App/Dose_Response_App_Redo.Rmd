@@ -468,15 +468,15 @@ plotlyOutput(outputId = "plotly_1")
 
 dataagg_tbl <- reactive({
 
-  print(dataagg())
+  glimpse(dataagg())
 })
 
 
 # renderTable(dataagg())
 
-# renderPrint(dataagg_tbl())
+renderPrint(dataagg_tbl())
 
-tableOutput(dataagg_tbl())
+# tableOutput(dataagg_tbl())
 
 ```
 
