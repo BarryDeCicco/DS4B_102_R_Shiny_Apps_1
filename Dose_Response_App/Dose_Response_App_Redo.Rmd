@@ -143,10 +143,19 @@ shinyWidgets::pickerInput(
   )
 )
 
-    updatePickerInput(
-    session = session, 
-    inputId = "picker_drug_name", 
-    selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first() )
+shinyWidgets::pickerInput(
+  inputId  = "picker_drug_name", 
+  label    = h4("Drug Name"), 
+  choices  = unique(Drugs_cov$DRUG.NAME) %>% sort(), 
+  selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first(), 
+  multiple = FALSE,
+  options  = list(
+    `actions-box` = TRUE,
+    size = 10,
+    `selected-text-format` = "count > 3"
+  )
+)
+
 
 
 
