@@ -260,7 +260,7 @@ summary_values_tbl <- reactive({
   
 })
 
-# renderPrint(summary_values_tbl())
+renderPrint(summary_values_tbl())
 
 ```
 
