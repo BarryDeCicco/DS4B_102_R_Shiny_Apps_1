@@ -233,8 +233,12 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
     session = session, 
     inputId = "picker_bikeshop_name", 
     selected = unique(processed_data_tbl$bikeshop.name) %>% sort())
-  
-  
+    
+    updatePickerInput(
+    session = session, 
+    inputId = "picker_drug_name", 
+    selected = unique(Drugs_cov$DRUG.NAME) %>% sort())
+
   updateDateRangeInput(
     session = session, 
     inputId = "date_range", 
