@@ -47,6 +47,7 @@ con <- dbConnect(RSQLite::SQLite(), "bikes_database.db")
 # con <- dbConnect(RSQLite::SQLite(), "00_data/bikes_database.db")
 
 # dbListTables(con)
+
 bikes_tbl <- tbl(con, "bikes")
 bikeshops_tbl <- tbl(con, "bikeshops")
 orderlines_tbl <- tbl(con, "orderlines")
@@ -169,18 +170,7 @@ shinyWidgets::pickerInput(
 )
 
 
-shinyWidgets::pickerInput(
-  inputId  = "picker_drug_name", 
-  label    = h4("Drug Name"), 
-  choices  = unique(Drugs_cov$DRUG.NAME) %>% sort(), 
-  selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first(), 
-  multiple = FALSE,
-  options  = list(
-    `actions-box` = TRUE,
-    size = 10,
-    `selected-text-format` = "count > 3"
-  )
-)
+
 
 # FORECAST MODE ------
 
@@ -232,12 +222,8 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
     session = session, 
     inputId = "picker_bikeshop_name", 
     selected = unique(processed_data_tbl$bikeshop.name) %>% sort())
-    
-    updatePickerInput(
-    session = session, 
-    inputId = "picker_drug_name", 
-    selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first() )
-
+  
+  
   updateDateRangeInput(
     session = session, 
     inputId = "date_range", 
@@ -273,6 +259,7 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
 # renderPrint(input$picker_category_2)
 
 # renderText(input$checkbox_category_1)
+
 ```
 
 ```{r}
