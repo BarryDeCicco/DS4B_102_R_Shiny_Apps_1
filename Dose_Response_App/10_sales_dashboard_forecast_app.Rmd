@@ -74,12 +74,12 @@ dbDisconnect(con)
 ```
 
 
-```{r dose-response-workshop-import-csv}
+```{r dose-response-workshop-import-csv, eval=TRUE}
 
-dose_response_df <- read.csv("Dose_Response_App/data.csv",
+dose_response_df <- read.csv("data.csv",
                              header = TRUE)
 
-View(dose_response_df)
+# View(dose_response_df)
 ```
 
 Column {.sidebar}
