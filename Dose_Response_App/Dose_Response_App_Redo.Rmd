@@ -73,6 +73,24 @@ processed_data_tbl <- processed_data_tbl %>%
 dbDisconnect(con)
 ```
 
+
+
+```{r dose-response-workshop-import-csv, eval=TRUE}
+
+# if running as an .R file:
+# Data <- read.csv("Dose_Response_App/data.csv", header = TRUE)
+
+# When running as shiny:
+Data <- read.csv("data.csv", header = TRUE)
+
+# class(Data)
+# names(Data)
+# sapply(Data, class) 
+
+```
+
+
+
 Column {.sidebar}
 ---------------------------------------------------------------
 
