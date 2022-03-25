@@ -173,8 +173,8 @@ shinyWidgets::pickerInput(
 shinyWidgets::pickerInput(
   inputId  = "picker_drug_name", 
   label    = h4("Drug Name"), 
-  choices  = unique(DRUG.NAME) %>% sort(), 
-  selected = unique(DRUG.NAME) %>% sort(), 
+  choices  = unique(Drugs_cov$DRUG.NAME) %>% sort(), 
+  selected = unique(Drugs_cov$DRUG.NAME) %>% sort(), 
   multiple = TRUE,
   options  = list(
     `actions-box` = TRUE,
