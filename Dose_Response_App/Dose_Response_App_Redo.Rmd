@@ -496,7 +496,7 @@ dataagg_tbl <- reactive({
     
    
    data <- Data %>% dplyr::filter(Drug == input$picker_drug_name) %>% 
-        dplyr::group_by(CONCEN.uM) %>% print()
+        dplyr::group_by(CONCEN.uM) %>% 
           dplyr::summarise(MEAN = mean(Response,na.rm = T),
                            SD = SD(Response,na.rm = T)
                            )
