@@ -514,7 +514,9 @@ dataagg_tbl <- reactive({
 
 ```{r dose-response-workshop-error-bar-plot, eval=TRUE}
 output$plotly_1 <- renderPlotly(expr = {
-  
+ 
+errorbar_title = paste0("Plot with Error Bars:  Drug = ",input$picker_drug_name)
+    
     dataagg_tbl() %>% ggplot(., aes(x = CONCEN.uM, y = MEAN)) + 
         scale_x_continuous(name = "CONCEN.uM", trans='log') +
         geom_errorbar(aes(ymin = MEAN - SD, ymax = MEAN + SD), width = .1, color = "green") +
