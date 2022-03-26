@@ -489,6 +489,25 @@ renderPrint(dataagg_tbl())
 ```
 
 
+```{r dose-response-workshop-print-filtered-aggregated-data-II, eval=TRUE}
+
+dataagg_tbl <- reactive({
+  
+    
+    print(data)
+   # data %>% dplyr::group_by(CONCEN.uM) %>% 
+   #       dplyr::summarise(MEAN = mean(Response,na.rm = T),
+   #                        SD = SD(Response,na.rm = T)
+   #                        )
+
+    
+})
+
+renderPrint(dataagg_tbl())
+
+
+```
+
 ### Over Time
 
 ```{r}
