@@ -505,14 +505,14 @@ dataagg_tbl <- reactive({
    
 })
 
-renderPrint(dataagg_tbl())
+# renderPrint(dataagg_tbl())
 
 
 ```
 
 
 
-```{r dose-response-workshop-error-bar-plot, eval=FALSE}
+```{r dose-response-workshop-error-bar-plot, eval=TRUE}
 output$plotly_1 <- renderPlotly(expr = {
   
     dataagg_tbl() %>% ggplot(aes(MEAN)) + geom_histogram() 
