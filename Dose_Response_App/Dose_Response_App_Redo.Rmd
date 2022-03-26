@@ -515,21 +515,24 @@ renderPrint(dataagg_tbl())
 ```{r dose-response-workshop-error-bar-plot, eval=FALSE}
 output$plotly_1 <- renderPlotly(expr = {
   
-  geo_plot_tbl() %>%
-    plot_geo(locationmode = "USA-states") %>%
-    add_trace(z         = ~total_revenue, 
-              locations = ~state, 
-              color     = ~total_revenue,
-              text      = ~label_text,
-              colors    = "Blues") %>%
-    layout(
-        geo = list(
-            scope = "usa",
-            projection = list(type = "albers usa"),
-            showlakes  = TRUE,
-            lakecolor  = toRGB("white")
-        )
-    )
+    dataagg_tbl() %>% ggplot(aes(MEAN)) + geom_histogram() 
+    
+    
+  # geo_plot_tbl() %>%
+  #   plot_geo(locationmode = "USA-states") %>%
+  #   add_trace(z         = ~total_revenue, 
+  #             locations = ~state, 
+  #             color     = ~total_revenue,
+  #             text      = ~label_text,
+  #             colors    = "Blues") %>%
+  #   layout(
+  #       geo = list(
+  #           scope = "usa",
+  #           projection = list(type = "albers usa"),
+  #           showlakes  = TRUE,
+  #           lakecolor  = toRGB("white")
+  #       )
+  #   )
   
 })
 
