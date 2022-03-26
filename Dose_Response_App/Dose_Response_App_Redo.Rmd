@@ -515,7 +515,12 @@ dataagg_tbl <- reactive({
 ```{r dose-response-workshop-error-bar-plot, eval=TRUE}
 output$plotly_1 <- renderPlotly(expr = {
   
-    dataagg_tbl() %>% ggplot(., aes(x = CONCEN.uM, y = MEAN)) 
+    dataagg_tbl() %>% ggplot(., aes(x = CONCEN.uM, y = MEAN)) + 
+        scale_x_continuous(name = "CONCEN.uM", trans='log') +
+        geom_errorbar(aes(ymin = MEAN - SD, ymax = MEAN + SD), width = .1, color = "green") +
+        geom_line(color = "green") + geom_point(color = "green") + 
+        theme_bw() + 
+        theme_classic()
     
     
   # geo_plot_tbl() %>%
