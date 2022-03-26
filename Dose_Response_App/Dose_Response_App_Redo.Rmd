@@ -522,7 +522,9 @@ errorbar_title = paste0("Plot with Error Bars:  Drug = ",input$picker_drug_name)
         geom_errorbar(aes(ymin = MEAN - SD, ymax = MEAN + SD), width = .1, color = "green") +
         geom_line(color = "green") + geom_point(color = "green") + 
         theme_bw() + 
-        theme_classic()
+        theme_classic() +
+        labs(title=errorbar_title,
+        x ="Concentration (uM, log scale)", y = "Men Response")
     
     
   # geo_plot_tbl() %>%
