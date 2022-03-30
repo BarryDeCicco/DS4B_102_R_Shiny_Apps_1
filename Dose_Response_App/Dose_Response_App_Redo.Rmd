@@ -364,45 +364,15 @@ plotlyOutput(outputId = "plotly_1")
 
 ### Scatterplot of Response vs Dose
 
+```{r run-models, eval = FALSE}
 
-```{r time-series-plot, eval=FALSE}
-time_plot_tbl <- reactive({
-  
-  processed_data_filtered_tbl() %>%
-      aggregate_time_series(time_unit = input$time_unit)
+# Set up prediction data set:
 
-})
-  
-time_plot_predictions_tbl <- eventReactive(eventExpr = input$apply, {
-    if(input$forecast_mode){
-        time_plot_tbl() %>% 
-            generate_forecast(n_future = input$n_future, seed = 123)
-    }
-    
-    
-})
+Con = data.frame(seq(min(data$CONCEN.uM), max(data$CONCEN.uM), length.out = 1000))
+
+View(Con)
 
 
-# renderPrint(time_plot_predictions_tbl())
-
-output$plotly_2 <- renderPlotly({
-
-  if(input$forecast_mode){
-    p <-   time_plot_predictions_tbl() %>% 
-           plot_forecast()
-  } else {
-    p <-   time_plot_tbl() %>% 
-       plot_time_series()
-  }
-
-# pipr the plot into a layout command, to set the margins better:    
-
-    p %>% layout(margin = list(b = 200))
-    
-})
-
-plotlyOutput(outputId = "plotly_2")
-  
 ```
 
 
