@@ -623,7 +623,6 @@ output$plotly_2 <- renderPlotly({
            plot_forecast()
   } else {
     p <-   time_plot_tbl() %>% 
-            plot_time_series()
       
   }
 
@@ -637,3 +636,44 @@ plotlyOutput(outputId = "plotly_2")
   
 ```
 
+
+```{r scatterplot-dose-response-data, eval=FALSE}
+# time_plot_tbl <- reactive({
+#   
+#   processed_data_filtered_tbl() %>%
+#       aggregate_time_series(time_unit = input$time_unit)
+# 
+# })
+#   
+# time_plot_predictions_tbl <- eventReactive(eventExpr = input$apply, {
+#     if(input$forecast_mode){
+#         time_plot_tbl() %>% 
+#             generate_forecast(n_future = input$n_future, seed = 123)
+#     }
+#     
+#     
+# })
+
+
+renderPrint(data)
+
+# output$plotly_2 <- renderPlotly({
+# 
+#   if(input$forecast_mode){
+#     p <-   time_plot_predictions_tbl() %>% 
+#            plot_forecast()
+#   } else {
+#     p <-   time_plot_tbl() %>% 
+#             plot_time_series()
+#       
+#   }
+# 
+# # pipr the plot into a layout command, to set the margins better:    
+# 
+#     p %>% layout(margin = list(b = 200))
+#     
+# })
+# 
+# plotlyOutput(outputId = "plotly_2")
+  
+```
