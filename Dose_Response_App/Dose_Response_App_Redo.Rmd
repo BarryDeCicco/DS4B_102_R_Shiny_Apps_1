@@ -672,3 +672,41 @@ renderPrint(scatterplot_tbl())
 # plotlyOutput(outputId = "plotly_2")
   
 ```
+
+
+
+```{r plot-scatterplot-dose-response-data, eval=TRUE}
+
+scatterplot_tbl <- reactive({
+
+     data <- Data %>% dplyr::filter(Drug == input$picker_drug_name) 
+
+     print(data)
+})
+
+
+
+
+renderPrint(scatterplot_tbl())
+
+
+# output$plotly_2 <- renderPlotly({
+# 
+#   if(input$forecast_mode){
+#     p <-   time_plot_predictions_tbl() %>% 
+#            plot_forecast()
+#   } else {
+#     p <-   time_plot_tbl() %>% 
+#             plot_time_series()
+#       
+#   }
+# 
+# # pipr the plot into a layout command, to set the margins better:    
+# 
+#     p %>% layout(margin = list(b = 200))
+#     
+# })
+# 
+# plotlyOutput(outputId = "plotly_2")
+  
+```
