@@ -637,7 +637,7 @@ plotlyOutput(outputId = "plotly_2")
 ```
 
 
-```{r scatterplot-dose-response-data, eval=FALSE}
+```{r scatterplot-dose-response-data, eval=TRUE}
 
 scatterplot_tbl <- reactive({
 
