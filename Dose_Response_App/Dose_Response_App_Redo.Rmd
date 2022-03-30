@@ -418,7 +418,7 @@ renderValueBox({
 Row {data-height=850}
 ---------------------------------------------------------------
 
-### By State
+### Error Bar Plot
 
 ```{r, eval=FALSE}
 
