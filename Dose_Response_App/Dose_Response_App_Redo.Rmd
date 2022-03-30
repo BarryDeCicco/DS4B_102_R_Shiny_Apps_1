@@ -638,24 +638,18 @@ plotlyOutput(outputId = "plotly_2")
 
 
 ```{r scatterplot-dose-response-data, eval=FALSE}
-# time_plot_tbl <- reactive({
-#   
-#   processed_data_filtered_tbl() %>%
-#       aggregate_time_series(time_unit = input$time_unit)
-# 
-# })
-#   
-# time_plot_predictions_tbl <- eventReactive(eventExpr = input$apply, {
-#     if(input$forecast_mode){
-#         time_plot_tbl() %>% 
-#             generate_forecast(n_future = input$n_future, seed = 123)
-#     }
-#     
-#     
-# })
+
+scatterplot_tbl <- reactive({
+
+     data <- Data %>% dplyr::filter(Drug == input$picker_drug_name) 
+
+})
 
 
-renderPrint(data)
+
+
+renderPrint(scatterplot_tbl())
+
 
 # output$plotly_2 <- renderPlotly({
 # 
