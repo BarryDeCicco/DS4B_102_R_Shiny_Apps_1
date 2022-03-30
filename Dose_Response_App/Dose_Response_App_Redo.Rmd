@@ -643,6 +643,7 @@ scatterplot_tbl <- reactive({
 
      data <- Data %>% dplyr::filter(Drug == input$picker_drug_name) 
 
+     print(data)
 })
 
 
