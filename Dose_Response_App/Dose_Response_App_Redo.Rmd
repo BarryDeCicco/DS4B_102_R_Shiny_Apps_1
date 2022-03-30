@@ -366,12 +366,26 @@ plotlyOutput(outputId = "plotly_1")
 
 ```{r run-models, eval = FALSE}
 
+
+
+
+
+
+
+
+
+
 # Set up prediction data set:
 
-Con = data.frame(seq(min(data$CONCEN.uM), max(data$CONCEN.uM), length.out = 1000))
+Con  <-  data.frame(seq(min(data$CONCEN.uM), max(data$CONCEN.uM), 
+                        length.out = 1000)) %>% 
+    dplyr::rename(CONCEN.uM =                       seq.min.data.CONCEN.uM...max.data.CONCEN.uM...length.out...1000.)
 
-View(Con)
+# View(Con)
 
+Fit = data.frame(predict(model_selected, newdata = Con))
+Fit = data.frame(Con, Fit)
+names(Fit) = c("CONCEN.uM", "Response")
 
 ```
 
