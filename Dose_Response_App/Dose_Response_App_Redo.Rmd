@@ -652,24 +652,6 @@ scatterplot_tbl <- reactive({
 renderPrint(scatterplot_tbl())
 
 
-# output$plotly_2 <- renderPlotly({
-# 
-#   if(input$forecast_mode){
-#     p <-   time_plot_predictions_tbl() %>% 
-#            plot_forecast()
-#   } else {
-#     p <-   time_plot_tbl() %>% 
-#             plot_time_series()
-#       
-#   }
-# 
-# # pipr the plot into a layout command, to set the margins better:    
-# 
-#     p %>% layout(margin = list(b = 200))
-#     
-# })
-# 
-# plotlyOutput(outputId = "plotly_2")
   
 ```
 
@@ -677,36 +659,22 @@ renderPrint(scatterplot_tbl())
 
 ```{r plot-scatterplot-dose-response-data, eval=TRUE}
 
-scatterplot_tbl <- reactive({
 
-     data <- Data %>% dplyr::filter(Drug == input$picker_drug_name) 
 
-     print(data)
+output$plotly_2 <- renderPlotly({
+
+scatterplot_title = paste0("Scatter Plot of Dose and Response:  Drug = ", input$picker_drug_name)
+    
+    scatterplot_tbl() %>% ggplot(., aes(x = round(CONCEN.uM,2), y = Response)) + 
+        scale_x_continuous(name = "CONCEN.uM", trans='log') +
+        geom_point() +
+        theme_bw() + 
+        theme_classic() +
+        labs(title=errorbar_title,
+        x ="Concentration (uM, log scale)", y = "Response")
+
 })
 
-
-
-
-renderPrint(scatterplot_tbl())
-
-
-# output$plotly_2 <- renderPlotly({
-# 
-#   if(input$forecast_mode){
-#     p <-   time_plot_predictions_tbl() %>% 
-#            plot_forecast()
-#   } else {
-#     p <-   time_plot_tbl() %>% 
-#             plot_time_series()
-#       
-#   }
-# 
-# # pipr the plot into a layout command, to set the margins better:    
-# 
-#     p %>% layout(margin = list(b = 200))
-#     
-# })
-# 
-# plotlyOutput(outputId = "plotly_2")
+plotlyOutput(outputId = "plotly_2")
   
 ```
