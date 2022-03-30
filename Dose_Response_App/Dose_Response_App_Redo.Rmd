@@ -596,7 +596,7 @@ observeEvent(eventExpr = input$forecast_mode,{
 ```
 
 
-```{r}
+```{r time-series-plot, eval=FALSE}
 time_plot_tbl <- reactive({
   
   processed_data_filtered_tbl() %>%
