@@ -182,7 +182,7 @@ summary_values_tbl <- reactive({
 
 ### Health
 
-```{r}
+```{r, eval=FALSE}
 renderValueBox({
   
   valueBox(
@@ -201,7 +201,7 @@ renderValueBox({
 
 ### Wealthy
 
-```{r}
+```{r, eval=FALSE}
 renderValueBox({
   
   valueBox(
@@ -219,7 +219,7 @@ renderValueBox({
 
 ### Wise
 
-```{r}
+```{r, eval=FALSE}
 renderValueBox({
   
   valueBox(
