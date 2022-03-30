@@ -551,7 +551,7 @@ plotlyOutput(outputId = "plotly_1")
 
 
 
-### Over Time
+### Scatterplot of Response vs Dose
 
 
 ```{r time-series-plot, eval=FALSE}
