@@ -89,51 +89,6 @@ Column {.sidebar}
 ```{r}
 useShinyjs(rmd = TRUE)
 
-dateRangeInput(
-  inputId = "date_range", 
-  label   = h4("Date Range"),
-  start   = min(processed_data_tbl$order.date), 
-  end     = max(processed_data_tbl$order.date), 
-  min     = min(processed_data_tbl$order.date), 
-  max     = max(processed_data_tbl$order.date), 
-  startview = "month")
-
-
-shinyWidgets::checkboxGroupButtons(
-  inputId   = "checkbox_category_1", 
-  label     = h4("Bike Type"), 
-  choices   = unique(processed_data_tbl$category_1), 
-  selected  = unique(processed_data_tbl$category_1), 
-  checkIcon = list(
-    yes = icon("ok", lib = "glyphicon"),
-    no  = icon("remove", lib = "glyphicon")
-  ))
-
-shinyWidgets::pickerInput(
-  inputId  = "picker_category_2", 
-  label    = h4("Bike Family"), 
-  choices  = unique(processed_data_tbl$category_2), 
-  selected = unique(processed_data_tbl$category_2), 
-  multiple = TRUE,
-  options  = list(
-    `actions-box` = TRUE,
-    size = 10,
-    `selected-text-format` = "count > 3"
-  )
-)
-
-shinyWidgets::pickerInput(
-  inputId  = "picker_bikeshop_name", 
-  label    = h4("Bike Shop (Customer)"), 
-  choices  = unique(processed_data_tbl$bikeshop.name) %>% sort(), 
-  selected = unique(processed_data_tbl$bikeshop.name) %>% sort(), 
-  multiple = TRUE,
-  options  = list(
-    `actions-box` = TRUE,
-    size = 10,
-    `selected-text-format` = "count > 3"
-  )
-)
 
 shinyWidgets::pickerInput(
   inputId  = "picker_drug_name", 
@@ -151,30 +106,6 @@ shinyWidgets::pickerInput(
 
 
 
-# FORECAST MODE ------
-
-
-
-br()
-hr()
-br()
-
-h4("Forecast Mode")
-switchInput(
-    inputId = "forecast_mode", 
-    handleWidth = 80, 
-    labelWidth = 80,
-    inline = TRUE,
-    width = "150px")
-
-conditionalPanel(
-    condition="input.forecast_mode == 1", 
-    numericInput(inputId = "n_future",
-                 label   = "Forecast Horizon",
-                 value   = 12,
-                 min     =  1)
-                )
-
 # APPLY BUTTONS ------
 
 br()
@@ -185,89 +116,8 @@ actionButton(inputId = "apply", label = "Apply", icon = icon("play"))
 
 actionButton(inputId = "reset", label = "Reset", icon = icon("sync"))
 
-observeEvent(eventExpr = input$reset, handlerExpr = {
-  
-  updateCheckboxGroupButtons(
-    session  = session, 
-    inputId  = "checkbox_category_1", 
-    selected = unique(processed_data_tbl$category_1))
-  
-  updatePickerInput(
-    session = session, 
-    inputId = "picker_category_2", 
-    selected = unique(processed_data_tbl$category_2))
-  
-    updatePickerInput(
-    session = session, 
-    inputId = "picker_bikeshop_name", 
-    selected = unique(processed_data_tbl$bikeshop.name) %>% sort())
-  
-    updatePickerInput(
-    session = session, 
-    inputId = "picker_drug_name", 
-    selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first() )
-
-      
-  updateDateRangeInput(
-    session = session, 
-    inputId = "date_range", 
-    start   = min(processed_data_tbl$order.date), 
-    end     = max(processed_data_tbl$order.date))
-  
-  updateRadioGroupButtons(
-    session = session, 
-    inputId = "time_unit", 
-    selected = "month"
-  )
-
-  updateSwitchInput(
-      session = session,
-      inputId = "forecast_mode",
-      value  = FALSE
-  )
-  
-  updateNumericInput(
-      session = session,
-      inputId = "n_future",
-      value   = 12
-  )
-  shinyjs::delay(ms = 300, expr = {
-    shinyjs::click(id = "apply")
-  })
- 
-  
-})
-
-# renderPrint(input$date_range)
-
-# renderPrint(input$picker_category_2)
-
-# renderText(input$checkbox_category_1)
 ```
 
-```{r}
-processed_data_filtered_tbl <- eventReactive(
-  eventExpr = input$apply, 
-                                             
-  valueExpr = {
-  
-    processed_data_tbl %>%
-      
-      filter(order.date %>% between(left  = input$date_range[1], 
-                                    right = input$date_range[2])) %>%
-  
-      filter(category_1 %in% input$checkbox_category_1) %>%
-      
-      filter(category_2 %in% input$picker_category_2) %>% 
-      
-      filter(bikeshop.name %in% input$picker_bikeshop_name)
-  },
-  ignoreNULL = FALSE
-)
-
-
-
-```
 
 
 ```{r dose-response-workshop-filter-data, eval=TRUE}
