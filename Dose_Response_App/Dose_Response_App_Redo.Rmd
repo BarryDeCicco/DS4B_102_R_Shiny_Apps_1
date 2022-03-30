@@ -649,7 +649,7 @@ scatterplot_tbl <- reactive({
 
 
 
-renderPrint(scatterplot_tbl())
+# renderPrint(scatterplot_tbl())
 
 
   
@@ -670,7 +670,7 @@ scatterplot_title = paste0("Scatter Plot of Dose and Response:  Drug = ", input$
         geom_point() +
         theme_bw() + 
         theme_classic() +
-        labs(title=errorbar_title,
+        labs(title=scatterplot_title,
         x ="Concentration (uM, log scale)", y = "Response")
 
 })
