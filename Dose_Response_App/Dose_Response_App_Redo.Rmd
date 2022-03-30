@@ -623,7 +623,7 @@ output$plotly_2 <- renderPlotly({
            plot_forecast()
   } else {
     p <-   time_plot_tbl() %>% 
-      
+       plot_time_series()
   }
 
 # pipr the plot into a layout command, to set the margins better:    
