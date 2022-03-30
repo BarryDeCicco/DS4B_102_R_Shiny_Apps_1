@@ -42,7 +42,7 @@ source("04_demand_forecast.r")
 }
 ``` 
 
-```{r}
+```{r pull-bikeshop-data}
 con <- dbConnect(RSQLite::SQLite(), "bikes_database.db")
 # con <- dbConnect(RSQLite::SQLite(), "00_data/bikes_database.db")
 
