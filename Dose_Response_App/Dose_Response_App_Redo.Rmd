@@ -553,48 +553,6 @@ plotlyOutput(outputId = "plotly_1")
 
 ### Over Time
 
-```{r}
-shinyWidgets::radioGroupButtons(
-  inputId  = "time_unit", 
-  label    = "Time Unit", 
-  choices  = c("D" = "day", "W" = "week", "M" = "month", "Q" = "quarter", "Y" = "year"), 
-  selected = "month", 
-  status   = "primary", 
-  justified = TRUE, 
-  checkIcon = list(
-    yes = icon("ok", lib = "glyphicon"), 
-    no  = NULL
-    )
-)
-
-# add an observeEvent() function, so that whenever the forecast mode is 'TRUE',
-# clicking on the Time Unit buttons above the plot will immediately change
-# the plot without having to hit the 'apply' button. 
-# Also add a delay, to allow time for the screen to update.
-
-observeEvent(eventExpr = input$time_unit,{
-    if(input$forecast_mode){
-        delay(300, click(id="apply"))
-    }
-})
-
-
-# add an observeEvent() function, so that whenever the forecast mode changed',
-# the plot will be changed without having to hit the 'apply' button. 
-# Also add a delay, to allow time for the screen to update.
-# This will only happen once.
-
-
-observeEvent(eventExpr = input$forecast_mode,{
-
-            delay(300, click(id="apply"))
-    }, once = TRUE)
-
-
-
-
-```
-
 
 ```{r time-series-plot, eval=FALSE}
 time_plot_tbl <- reactive({
