@@ -156,7 +156,7 @@ dataagg <- eventReactive(
 Row {data-height=150}
 ---------------------------------------------------------------
 
-```{r}
+```{r, eval=FALSE}
 summary_values_tbl <- reactive({
   
   processed_data_filtered_tbl() %>%
