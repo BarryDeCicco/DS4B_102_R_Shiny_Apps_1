@@ -217,7 +217,8 @@ model_row_reactive <- reactive({
 
 fct_command <- eventReactive({
       
-    model_row_reactive()$fct_command 
+    Model_List %>%  dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
+        summarise(Model_Command = unique(fct_command))
 
   },
   ignoreNULL = FALSE
