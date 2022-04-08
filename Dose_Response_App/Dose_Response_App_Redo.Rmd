@@ -493,7 +493,7 @@ scatterplot_tbl <- reactive({
 
 output$plotly_2 <- renderPlotly({
 
-scatterplot_title = paste0("Scatter Plot of Dose and Response:  Drug = ", input$picker_drug_name)
+scatterplot_title = paste0("Dose and Response:  Drug = ", input$picker_drug_name, "Model = ",model_row_reactive()$Model_Name)
     
     scatterplot_tbl() %>% ggplot(., aes(x = round(CONCEN.uM,2), y = Response)) + 
         scale_x_continuous(name = "CONCEN.uM", trans='log') +
