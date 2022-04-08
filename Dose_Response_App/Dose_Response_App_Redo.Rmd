@@ -287,8 +287,8 @@ renderValueBox({
 renderValueBox({
   
   valueBox(
-    value   =  input$picker_model_name, 
-    caption = "ModelName", 
+    value   =  model_row_reactive()$Model_Name, 
+    caption = "Model Name", 
     icon    = "fa-money-check-alt")
   
 })
