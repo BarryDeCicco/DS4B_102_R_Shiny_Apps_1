@@ -215,18 +215,18 @@ model_row_reactive <- reactive({
 
 ```{r dose-response-workshop-model-command, eval=TRUE}
 
-fct_command <- eventReactive({
-      
-    Model_List %>%  dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
-        summarise(Model_Command = unique(fct_command))
-
-  },
-  ignoreNULL = FALSE
-)
+# fct_command <- eventReactive({
+#       
+#     Model_List %>%  dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
+#         summarise(Model_Command = unique(fct_command))
+# 
+#   },
+#   ignoreNULL = FALSE
+# )
 
 
      
-renderPrint(fct_command())
+renderPrint(model_row_reactive())
 
 
 
@@ -492,7 +492,9 @@ scatterplot_tbl <- reactive({
 
 output$plotly_2 <- renderPlotly({
 
-scatterplot_title = paste0("Dose and Response:  Drug = ", input$picker_drug_name, "\n Model = ",model_row_reactive()$Model_Name)
+scatterplot_title = paste0("Dose and Response:  Drug = ", input$picker_drug_name, "\n Model = ",
+                           model_row_reactive()$Model_Name,
+                           "\n Model Command = ",model_row_reactive()$fct_command)
     
     scatterplot_tbl() %>% ggplot(., aes(x = round(CONCEN.uM,2), y = Response)) + 
         scale_x_continuous(name = "CONCEN.uM", trans='log') +
