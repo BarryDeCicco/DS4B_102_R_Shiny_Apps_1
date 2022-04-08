@@ -248,16 +248,17 @@ summary_values_tbl <- reactive({
 
 ```
 
-```{r create-model-name-reactive-object, eval=TRUE}
+```{r create-model-row-reactive-object, eval=TRUE}
 
-model_name_reactive <- reactive({
+model_row_reactive <- reactive({
   
     Model_List %>%  dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
-    select(Model_Name) %>% first()
+        summarise(Model_Name = unique(Model_Name),
+                  Model_Command = unique(fct_command))
     
 })
 
-renderPrint(class(model_name_reactive()))
+renderPrint(class(model_row_reactive()))
 
 ```
 
