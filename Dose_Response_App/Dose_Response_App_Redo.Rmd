@@ -252,7 +252,7 @@ summary_values_tbl <- reactive({
 model_name_reactive() <- reactive({
   
     input$picker_model_name
-    ) 
+    
 })
 
 renderPrint(model_name_reactive())
