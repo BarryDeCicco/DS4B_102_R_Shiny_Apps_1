@@ -502,7 +502,8 @@ scatterplot_title = paste0("Dose and Response:  Drug = ", input$picker_drug_name
         theme_classic() +
         labs(title=scatterplot_title,
         x ="Concentration (uM, log scale)", y = "Response") +
-        theme(plot.title = element_text(size = 10, vjust = 5))
+        theme(plot.title = element_text(size = 10, vjust = 5, face="bold")) +
+        theme(plot.margin = unit(c(1,1,1,1), "cm"))
 
 
 })
