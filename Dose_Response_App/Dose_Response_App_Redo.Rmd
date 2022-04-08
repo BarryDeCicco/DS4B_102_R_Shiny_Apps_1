@@ -213,7 +213,7 @@ model_row_reactive <- reactive({
 ```
 
 
-```{r dose-response-workshop-model-command, eval=TRUE}
+```{r dose-response-workshop-model-command, eval=FALSE}
 
 # fct_command <- eventReactive({
 #       
