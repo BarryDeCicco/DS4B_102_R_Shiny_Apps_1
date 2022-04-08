@@ -257,7 +257,7 @@ model_name_reactive <- reactive({
     
 })
 
-renderPrint(model_name_reactive())
+renderPrint(class(model_name_reactive()))
 
 ```
 
