@@ -258,7 +258,7 @@ model_row_reactive <- reactive({
     
 })
 
-renderPrint(model_row_reactive())
+# renderPrint(model_row_reactive())
 
 ```
 
