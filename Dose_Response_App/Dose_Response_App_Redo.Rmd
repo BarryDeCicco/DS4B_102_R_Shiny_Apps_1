@@ -198,6 +198,21 @@ dataagg <- eventReactive(
 ```
 
 
+```{r create-model-row-reactive-object, eval=TRUE}
+
+model_row_reactive <- reactive({
+  
+    Model_List %>%  dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
+        summarise(Model_Name = unique(Model_Name),
+                  Model_Command = unique(fct_command))
+    
+})
+
+# renderPrint(model_row_reactive())
+
+```
+
+
 ```{r dose-response-workshop-select-model, eval=TRUE}
 
 fct_command <- eventReactive(
@@ -248,19 +263,6 @@ summary_values_tbl <- reactive({
 
 ```
 
-```{r create-model-row-reactive-object, eval=TRUE}
-
-model_row_reactive <- reactive({
-  
-    Model_List %>%  dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
-        summarise(Model_Name = unique(Model_Name),
-                  Model_Command = unique(fct_command))
-    
-})
-
-# renderPrint(model_row_reactive())
-
-```
 
 ### Health
 
