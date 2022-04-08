@@ -234,6 +234,24 @@ renderPrint(model_row_reactive()$Model_Command)
 
 ```
 
+
+```{r set-up-model-statement, eval=TRUE}
+
+
+model_statement <- reactive({
+  
+    
+   statement <- paste0("drm(Response ~ CONCEN.uM, data = na.omit(data),",
+                       model_row_reactive()$Model_Command,
+                       ")")
+
+})
+
+renderPrint(model_statement())
+
+```
+
+
 Row {data-height=150}
 ---------------------------------------------------------------
 
@@ -410,21 +428,6 @@ plotlyOutput(outputId = "plotly_1")
 ### Scatterplot of Response vs Dose
 
 
-```{r set-up-model-statement, eval=TRUE}
-
-
-model_statement <- reactive({
-  
-    
-   statement <- paste0("drm(Response ~ CONCEN.uM, data = na.omit(data),",
-                       model_row_reactive(),
-                       ")")
-
-})
-
-renderPrint(model_statement())
-
-```
 
 ```{r run-models, eval = FALSE}
 
