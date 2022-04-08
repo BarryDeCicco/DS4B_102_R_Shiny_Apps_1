@@ -190,7 +190,7 @@ dataagg <- eventReactive(
   ignoreNULL = FALSE
 )
 
-# View(dataagg)
+ View(dataagg)
 
 
 
