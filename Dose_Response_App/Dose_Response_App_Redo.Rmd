@@ -249,9 +249,11 @@ summary_values_tbl <- reactive({
 ```
 
 ```{r create-model-name-reactive-object, eval=TRUE}
-model_name_reactive() <- reactive({
+
+model_name_reactive <- reactive({
   
-    input$picker_model_name
+    Model_List %>%  dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
+    select(Model_Name)
     
 })
 
