@@ -253,7 +253,7 @@ summary_values_tbl <- reactive({
 model_name_reactive <- reactive({
   
     Model_List %>%  dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
-    select(Model_Name)
+    select(Model_Name) %>% first()
     
 })
 
