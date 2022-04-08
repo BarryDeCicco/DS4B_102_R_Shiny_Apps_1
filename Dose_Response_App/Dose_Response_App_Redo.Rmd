@@ -268,19 +268,15 @@ renderValueBox({
 ```
 
 
-### Wealthy
+### Model Name
 
 ```{r, eval=FALSE}
 renderValueBox({
   
   valueBox(
-    value   = summary_values_tbl()$wealth_metric%>% 
-        scales::dollar(scale = 1E-6, suffix = "M", accuracy = 0.1),  
-    caption = "Sales", 
-    icon    = "fa-money-check-alt", 
-    color   = case_when(summary_values_tbl()$wealth_metric < 5e6 ~ "danger",
-                        summary_values_tbl()$wealth_metric < 50e6 ~ "warning",
-                        TRUE ~ "success"))
+    value   =  input$picker_model_name, 
+    caption = "ModelName", 
+    icon    = "fa-money-check-alt")
   
 })
 ```
