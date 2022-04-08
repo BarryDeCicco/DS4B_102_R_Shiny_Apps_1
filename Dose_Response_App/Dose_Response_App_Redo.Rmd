@@ -225,7 +225,7 @@ fct_command <- eventReactive(
 Row {data-height=150}
 ---------------------------------------------------------------
 
-```{r, eval=FALSE}
+```{r, create-original-metrics eval=FALSE}
 summary_values_tbl <- reactive({
   
   processed_data_filtered_tbl() %>%
