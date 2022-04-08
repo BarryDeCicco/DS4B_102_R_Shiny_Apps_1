@@ -226,7 +226,7 @@ model_row_reactive <- reactive({
 
 
      
-renderPrint(model_row_reactive()$Model_Name)
+renderPrint(model_row_reactive()$Model_Command)
 
 
 
