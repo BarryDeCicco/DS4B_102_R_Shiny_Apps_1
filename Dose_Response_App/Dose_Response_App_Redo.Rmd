@@ -225,7 +225,7 @@ fct_command <- eventReactive(
 Row {data-height=150}
 ---------------------------------------------------------------
 
-```{r, create-original-metrics eval=FALSE}
+```{r create-original-metrics, eval=FALSE}
 summary_values_tbl <- reactive({
   
   processed_data_filtered_tbl() %>%
@@ -248,6 +248,16 @@ summary_values_tbl <- reactive({
 
 ```
 
+```{r create-model-name-reactive-object, eval=TRUE}
+model_name_reactive() <- reactive({
+  
+    input$picker_model_name
+    ) 
+})
+
+renderPrint(model_name_reactive())
+
+```
 
 ### Health
 
