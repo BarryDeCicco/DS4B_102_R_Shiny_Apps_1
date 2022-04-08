@@ -218,7 +218,7 @@ model_row_reactive <- reactive({
 fct_command <- eventReactive({
       
     model_row_reactive()$fct_command 
-    select(fct_command)
+
   },
   ignoreNULL = FALSE
 )
