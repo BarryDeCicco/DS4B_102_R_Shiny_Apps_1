@@ -200,11 +200,23 @@ dataagg <- eventReactive(
 
 ```{r dose-response-workshop-select-model, eval=TRUE}
 
-Model_Name <- input$picker_drug_name
-
-fct_command <- Model_List %>% 
+fct_command <- eventReactive(
+  eventExpr = input$apply, 
+                                             
+  valueExpr = {
+      
+      fct_command <- Model_List %>% 
     dplyr::filter(Model_Name %in% input$picker_drug_name) %>% 
     select(fct_command)
+  },
+  ignoreNULL = FALSE
+)
+
+
+     
+
+
+
 
 
 
