@@ -149,7 +149,7 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
   selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first()
     )
 
-  pdatePickerInput(
+  updatePickerInput(
   session = session, 
   inputId = "picker_model_name", 
   selected = unique(Model_List$Model_Name) %>% sort() %>% first()
