@@ -58,6 +58,16 @@ Data <- read.csv("data.csv", header = TRUE)
 
 ```
 
+```{r import-Model_List.csv}
+
+# if running as an .R file:
+# Model_List <- read.csv("Dose_Response_App/Model_List.csv.csv", header = TRUE)
+
+# import the list of model names and commands:
+Model_List <- read.csv("Model_List.csv", header = TRUE)
+
+
+```
 
 ```{R dose-response-workshop-run-ANOVA-get-p-values}
 
