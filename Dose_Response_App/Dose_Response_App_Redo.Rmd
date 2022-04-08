@@ -115,6 +115,18 @@ shinyWidgets::pickerInput(
 
 
 
+shinyWidgets::pickerInput(
+  inputId  = "picker_model_name", 
+  label    = h4("Model to Use"), 
+  choices  = unique(Model_List$Model_Name) %>% sort(), 
+  selected = unique(Model_List$Model_Name) %>% sort() %>% first(), 
+  multiple = FALSE,
+  options  = list(
+    `actions-box` = TRUE,
+    size = 10,
+    `selected-text-format` = "count > 3"
+  )
+)
 
 # APPLY BUTTONS ------
 
@@ -137,6 +149,12 @@ observeEvent(eventExpr = input$reset, handlerExpr = {
   selected = unique(Drugs_cov$DRUG.NAME) %>% sort() %>% first()
     )
 
+  pdatePickerInput(
+  session = session, 
+  inputId = "picker_model_name", 
+  selected = unique(Model_List$Model_Name) %>% sort() %>% first()
+    )
+     
   shinyjs::delay(ms = 300, expr = {
     shinyjs::click(id = "apply")
   })
