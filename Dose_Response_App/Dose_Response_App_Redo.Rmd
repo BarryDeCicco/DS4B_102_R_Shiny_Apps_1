@@ -206,7 +206,7 @@ fct_command <- eventReactive(
   valueExpr = {
       
       fct_command <- Model_List %>% 
-    dplyr::filter(Model_Name %in% input$picker_drug_name) %>% 
+    dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
     select(fct_command)
   },
   ignoreNULL = FALSE
