@@ -213,15 +213,11 @@ model_row_reactive <- reactive({
 ```
 
 
-```{r dose-response-workshop-select-model, eval=TRUE}
+```{r dose-response-workshop-model-command, eval=TRUE}
 
-fct_command <- eventReactive(
-  eventExpr = input$apply, 
-                                             
-  valueExpr = {
+fct_command <- eventReactive({
       
-      fct_command <- Model_List %>% 
-    dplyr::filter(Model_Name %in% input$picker_model_name) %>% 
+    model_row_reactive()$fct_command 
     select(fct_command)
   },
   ignoreNULL = FALSE
@@ -229,7 +225,7 @@ fct_command <- eventReactive(
 
 
      
-
+renderPrint(fct_command())
 
 
 
