@@ -397,22 +397,7 @@ errorbar_title = paste0("Plot with Error Bars:  Drug = ",input$picker_drug_name)
         labs(title=errorbar_title,
         x ="Concentration (uM, log scale)", y = "Mean Response")
     
-    
-  # geo_plot_tbl() %>%
-  #   plot_geo(locationmode = "USA-states") %>%
-  #   add_trace(z         = ~total_revenue, 
-  #             locations = ~state, 
-  #             color     = ~total_revenue,
-  #             text      = ~label_text,
-  #             colors    = "Blues") %>%
-  #   layout(
-  #       geo = list(
-  #           scope = "usa",
-  #           projection = list(type = "albers usa"),
-  #           showlakes  = TRUE,
-  #           lakecolor  = toRGB("white")
-  #       )
-  #   )
+
   
 })
 
@@ -423,6 +408,7 @@ plotlyOutput(outputId = "plotly_1")
 
 
 ### Scatterplot of Response vs Dose
+
 
 ```{r run-models, eval = FALSE}
 
@@ -438,7 +424,6 @@ plotlyOutput(outputId = "plotly_1")
 # 4-parameter Weibull model                fct = W2.4()
 # 3-parameter Gompertz model               fct = G.3()
 # 4-parameter Gompertz model               fct = G.4()
-
 
 
 
