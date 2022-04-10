@@ -421,7 +421,7 @@ plotlyOutput(outputId = "plotly_1")
 ### Scatterplot of Response vs Dose
 
 
-```{r set-up-model-statement, eval=TRUE}
+```{r set-up-model-statement, eval=FALSE}
 
 
 model_statement <- reactive({
@@ -437,7 +437,7 @@ model_statement <- reactive({
 ```
 
 
-```{r run-model, eval=TRUE}
+```{r run-model, eval=FALSE}
 
 
 model_fit <- reactive({
