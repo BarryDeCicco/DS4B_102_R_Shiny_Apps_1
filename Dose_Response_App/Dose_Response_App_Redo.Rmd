@@ -425,7 +425,7 @@ model_statement <- reactive({
 
 })
 
-# renderPrint(class(model_statement()))
+ renderPrint(class(model_statement()))
 
 ```
 
@@ -453,7 +453,7 @@ model_run <- reactive({
 
 })
 
-renderPrint(class(model_run()))
+# renderPrint(class(model_run()))
 
 
 ```
