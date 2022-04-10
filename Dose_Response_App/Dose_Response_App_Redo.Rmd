@@ -445,7 +445,7 @@ model_fit <- reactive({
   
     
    model_fit <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()),
-                       model_row_reactive()$Model_Command)
+                    fct = model_row_reactive()$Model_Command)
 
 })
 
