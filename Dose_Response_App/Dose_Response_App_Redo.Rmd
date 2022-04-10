@@ -29,8 +29,16 @@ library(timetk)
 library(odbc)
 library(RSQLite)
 
+# For dose-response curves and smoothing splines:
+library(drc)
+library(npreg)
 
+
+* This file had functions for the original project:
+    
 source("04_demand_forecast.r")
+
+
 ```
 
 ```{css}
