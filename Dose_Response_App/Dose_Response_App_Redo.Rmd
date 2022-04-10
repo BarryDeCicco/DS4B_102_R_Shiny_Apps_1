@@ -208,7 +208,7 @@ model_row_reactive <- reactive({
     
 })
 
-# renderPrint(model_row_reactive())
+ renderPrint(model_row_reactive())
 
 ```
 
@@ -497,7 +497,8 @@ output$plotly_2 <- renderPlotly({
 
 scatterplot_title = paste0("Dose and Response:  Drug = ", input$picker_drug_name, "\n Model = ",
                            model_row_reactive()$Model_Name,
-                           "\n Model Command = ",model_row_reactive()$Model_Command, "\n","\n")
+                           "\n Model Command = ",model_row_reactive()$Model_Command, 
+                           "\n Model Statement =",model_statement)
     
     scatterplot_tbl() %>% ggplot(., aes(x = round(CONCEN.uM,2), y = Response)) + 
         scale_x_continuous(name = "CONCEN.uM", trans='log') +
