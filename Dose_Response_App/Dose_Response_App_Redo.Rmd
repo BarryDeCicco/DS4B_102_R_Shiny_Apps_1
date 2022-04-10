@@ -421,7 +421,7 @@ plotlyOutput(outputId = "plotly_1")
 ### Scatterplot of Response vs Dose
 
 
-```{r set-up-model-statement, eval=FALSE}
+```{r set-up-model-statement, eval=TRUE}
 
 
 model_statement <- reactive({
@@ -444,11 +444,11 @@ model_fit <- reactive({
   
     
    model_fit <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()),
-                    fct = renderPRint(model_row_reactive()$Model_Command))
+                    fct = renderPrint(model_row_reactive()$Model_Command))
 
 })
 
-# renderPrint(class(model_fit()))
+renderPrint(class(model_fit()))
 
 ```
 
