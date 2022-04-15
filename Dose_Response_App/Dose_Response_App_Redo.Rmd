@@ -1,5 +1,5 @@
 ---
-title: "Sales Dashboard"
+title: "Dose Response Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
