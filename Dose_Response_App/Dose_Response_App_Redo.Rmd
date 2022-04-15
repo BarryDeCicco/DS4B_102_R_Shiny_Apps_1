@@ -453,7 +453,7 @@ renderPrint(class(model_fit()))
 ```
 
 
-```{r run-model, eval=TRUE}
+```{r run-model, eval=FALSE}
 
 
 model_fit <- reactive({
@@ -528,7 +528,7 @@ scatterplot_tbl <- reactive({
 
 
 
-# renderPrint(scatterplot_tbl())
+ renderPrint(scatterplot_tbl())
 
 
   
