@@ -440,6 +440,25 @@ scatterplot_tbl <- reactive({
 ```
 
 
+
+
+```{r run-model, eval=TRUE}
+
+
+model_fit <- reactive({
+  
+    
+    model <- drm(Response ~ CONCEN.uM, data = na.omit(scatterplot_tbl()), fct = LL.3u(upper = 100))
+    
+
+})
+
+renderPrint(class(model_fit()))
+
+```
+
+
+
 ```{r set-up-model-statement, eval=FALSE}
 
 
@@ -464,22 +483,6 @@ model_fit <- reactive({
     
    model_fit <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()),
                     fct = renderPrint(model_row_reactive()$Model_Command))
-
-})
-
-renderPrint(class(model_fit()))
-
-```
-
-
-```{r run-model, eval=FALSE}
-
-
-model_fit <- reactive({
-  
-    
-    model <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()), fct = LL.3u(upper = 100))
-    
 
 })
 
