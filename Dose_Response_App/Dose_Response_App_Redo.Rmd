@@ -437,7 +437,7 @@ model_statement <- reactive({
 ```
 
 
-```{r run-model, eval=FALSE}
+```{r run-model-old, eval=FALSE}
 
 
 model_fit <- reactive({
