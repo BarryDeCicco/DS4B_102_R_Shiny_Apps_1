@@ -453,7 +453,7 @@ model_fit <- reactive({
     summary(model)
 })
 
-renderPrint(summary(model_fit()))
+# renderPrint(summary(model_fit()))
 
 ```
 
@@ -478,7 +478,7 @@ names(Fit) = c("CONCEN.uM", "Response")
 
 })
 
-# renderPrint(class(model_prediction()))
+renderPrint(model_prediction())
 
 ```
 
