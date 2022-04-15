@@ -433,7 +433,7 @@ scatterplot_tbl <- reactive({
 
 
 
- renderPrint(scatterplot_tbl())
+# renderPrint(scatterplot_tbl())
 
 
   
@@ -478,7 +478,7 @@ names(Fit) = c("CONCEN.uM", "Response")
 
 })
 
-renderPrint(class(model_prediction()))
+# renderPrint(class(model_prediction()))
 
 ```
 
