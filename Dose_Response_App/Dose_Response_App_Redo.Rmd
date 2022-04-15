@@ -476,6 +476,7 @@ Fit = data.frame(predict(model_fit(), newdata = Con))
 Fit = data.frame(Con, Fit)
 names(Fit) = c("CONCEN.uM", "Response")
 
+print(Fit)
 })
 
  renderPrint(model_prediction())
