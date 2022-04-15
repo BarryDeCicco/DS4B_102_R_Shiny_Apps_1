@@ -485,38 +485,6 @@ print(Fit)
 
 
 
-```{r set-up-model-statement, eval=FALSE}
-
-
-model_statement <- reactive({
-  
-    
-   statement <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()),
-                    fct = model_row_reactive()$Model_Command)
-
-})
-
-# renderPrint(model_statement())
-
-```
-
-
-```{r run-model-old, eval=FALSE}
-
-
-model_fit <- reactive({
-  
-    
-   model_fit <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()),
-                    fct = renderPrint(model_row_reactive()$Model_Command))
-
-})
-
-# renderPrint(class(model_fit()))
-
-```
-
-
 ```{r run-models-old, eval = FALSE}
 
 # Select Model:
