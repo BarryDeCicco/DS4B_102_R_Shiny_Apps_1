@@ -458,6 +458,24 @@ renderPrint(class(model_fit()))
 ```
 
 
+```{r run-prediction, eval = TRUE}
+
+
+# Set up prediction data set:
+
+Con  <-  data.frame(seq(min(data$CONCEN.uM), max(data$CONCEN.uM), 
+                        length.out = 1000)) %>% 
+    dplyr::rename(CONCEN.uM =                       seq.min.data.CONCEN.uM...max.data.CONCEN.uM...length.out...1000.)
+
+# View(Con)
+
+Fit = data.frame(predict(model, newdata = Con))
+Fit = data.frame(Con, Fit)
+names(Fit) = c("CONCEN.uM", "Response")
+
+```
+
+
 
 ```{r set-up-model-statement, eval=FALSE}
 
@@ -520,22 +538,7 @@ model_run <- reactive({
 ```
 
 
-```{r run-prediction, eval = FALSE}
 
-
-# Set up prediction data set:
-
-Con  <-  data.frame(seq(min(data$CONCEN.uM), max(data$CONCEN.uM), 
-                        length.out = 1000)) %>% 
-    dplyr::rename(CONCEN.uM =                       seq.min.data.CONCEN.uM...max.data.CONCEN.uM...length.out...1000.)
-
-# View(Con)
-
-Fit = data.frame(predict(model_selected, newdata = Con))
-Fit = data.frame(Con, Fit)
-names(Fit) = c("CONCEN.uM", "Response")
-
-```
 
 
 
