@@ -458,6 +458,46 @@ model_fit <- reactive({
 ```
 
 
+```{r run-model-selected, eval = FALSE}
+
+
+
+model_fit <- reactive({
+    
+   model <- case_when{ input$picker_model_name == "3-parameter log-logistic model" ~ 
+       drm(Response ~ CONCEN.uM, data = na.omit(data), fct = LL.3u(upper = 100)),
+   4-parameter log-logistic model,
+                       input$picker_model_name == "3-parameter log-logistic model" ~ 
+           drm(Response ~ CONCEN.uM, data = na.omit(data), fct = LL.4())
+                     }
+})
+
+
+# 3-parameter log-logistic model           fct = LL.3u(upper = 100))
+# 4-parameter log-logistic model           fct = LL.4()
+# 3-parameter asymptotic regression model  fct = AR.3()
+# 3-parameter exponential model            fct = EXD.3()
+# two 3 parameter Weibull models           fct = W1.3()
+# two 3-parameter Weibull models           fct = W2.3()
+# 4-parameter Weibull models               fct = W1.4()
+# 4-parameter Weibull model                fct = W2.4()
+# 3-parameter Gompertz model               fct = G.3()
+# 4-parameter Gompertz model               fct = G.4()
+
+
+model_run <- reactive({
+  
+    
+   model_run <- model_statement()
+
+})
+
+# renderPrint(class(model_run()))
+
+
+```
+
+
 ```{r run-prediction, eval = TRUE}
 
 
@@ -485,33 +525,6 @@ print(Fit)
 
 
 
-```{r run-model-selected, eval = FALSE}
-
-# Select Model:
-
-# 3-parameter log-logistic model           fct = LL.3u(upper = 100))
-# 4-parameter log-logistic model           fct = LL.4()
-# 3-parameter asymptotic regression model  fct = AR.3()
-# 3-parameter exponential model            fct = EXD.3()
-# two 3 parameter Weibull models           fct = W1.3()
-# two 3-parameter Weibull models           fct = W2.3()
-# 4-parameter Weibull models               fct = W1.4()
-# 4-parameter Weibull model                fct = W2.4()
-# 3-parameter Gompertz model               fct = G.3()
-# 4-parameter Gompertz model               fct = G.4()
-
-
-model_run <- reactive({
-  
-    
-   model_run <- model_statement()
-
-})
-
-# renderPrint(class(model_run()))
-
-
-```
 
 
 
