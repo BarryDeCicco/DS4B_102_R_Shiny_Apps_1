@@ -442,7 +442,7 @@ scatterplot_tbl <- reactive({
 
 
 
-```{r run-model, eval=TRUE}
+```{r run-model, eval=FALSE}
 
 
 model_fit <- reactive({
@@ -458,17 +458,17 @@ model_fit <- reactive({
 ```
 
 
-```{r run-model-selected, eval = FALSE}
+```{r run-model-selected, eval = TRUE}
 
 
 
 model_fit <- reactive({
 
     if(input$picker_model_name == "3-parameter log-logistic model") {
-        model <- drm(Response ~ CONCEN.uM, data = na.omit(data), fct = LL.3u(upper = 100))
+        model <- drm(Response ~ CONCEN.uM, data = scatterplot_tbl(), fct = LL.3u(upper = 100))
     }
     else if(input$picker_model_name == "4-parameter log-logistic model") {
-        model <- drm(Response ~ CONCEN.uM, data = na.omit(data), fct = LL.4())
+        model <- drm(Response ~ CONCEN.uM, data = scatterplot_tbl(), fct = LL.4())
     }
 
    
