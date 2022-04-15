@@ -442,7 +442,7 @@ scatterplot_tbl <- reactive({
 
 
 
-```{r run-model, eval=TRUE}
+```{r run-model, eval=FALSE}
 
 
 model_fit <- reactive({
@@ -458,7 +458,7 @@ model_fit <- reactive({
 ```
 
 
-```{r run-model-selected, eval = FALSE}
+```{r run-model-selected, eval = TRUE}
 
 
 
