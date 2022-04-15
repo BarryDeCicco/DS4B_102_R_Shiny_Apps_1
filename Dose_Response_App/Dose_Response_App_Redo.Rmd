@@ -478,7 +478,7 @@ names(Fit) = c("CONCEN.uM", "Response")
 
 })
 
- renderPrint(class(model_prediction()))
+ renderPrint(model_prediction())
 
 ```
 
