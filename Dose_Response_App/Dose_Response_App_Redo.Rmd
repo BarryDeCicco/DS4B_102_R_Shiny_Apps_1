@@ -448,7 +448,7 @@ scatterplot_tbl <- reactive({
 model_fit <- reactive({
   
     
-    model <- drm(Response ~ CONCEN.uM, data = na.omit(scatterplot_tbl()), fct = LL.3u(upper = 100))
+    model <- drm(Response ~ CONCEN.uM, data = scatterplot_tbl(), fct = LL.3u(upper = 100))
     
 
 })
