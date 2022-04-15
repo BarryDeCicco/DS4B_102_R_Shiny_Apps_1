@@ -453,6 +453,22 @@ renderPrint(class(model_fit()))
 ```
 
 
+```{r run-model, eval=FALSE}
+
+
+model_fit <- reactive({
+  
+    
+   model_fit <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()),
+                    fct = renderPrint(model_row_reactive()$Model_Command))
+
+})
+
+renderPrint(class(model_fit()))
+
+```
+
+
 ```{r run-models-old, eval = FALSE}
 
 # Select Model:
