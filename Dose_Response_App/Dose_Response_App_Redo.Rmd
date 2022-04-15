@@ -453,7 +453,7 @@ model_fit <- reactive({
 
 })
 
-renderPrint(class(model_fit()))
+# renderPrint(class(model_fit()))
 
 ```
 
@@ -511,7 +511,7 @@ model_fit <- reactive({
 
 })
 
-renderPrint(class(model_fit()))
+# renderPrint(class(model_fit()))
 
 ```
 
