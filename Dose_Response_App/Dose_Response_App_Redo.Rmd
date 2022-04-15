@@ -453,14 +453,14 @@ renderPrint(class(model_fit()))
 ```
 
 
-```{r run-model, eval=FALSE}
+```{r run-model, eval=TRUE}
 
 
 model_fit <- reactive({
   
     
-   model_fit <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()),
-                    fct = renderPrint(model_row_reactive()$Model_Command))
+    model <- drm(Response ~ CONCEN.uM, data = na.omit(dataagg_tbl()), fct = LL.3u(upper = 100))
+    
 
 })
 
