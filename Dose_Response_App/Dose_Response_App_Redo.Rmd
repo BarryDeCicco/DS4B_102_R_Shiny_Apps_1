@@ -485,7 +485,7 @@ print(Fit)
 
 
 
-```{r run-models-old, eval = FALSE}
+```{r run-model-selected, eval = FALSE}
 
 # Select Model:
 
