@@ -421,6 +421,25 @@ plotlyOutput(outputId = "plotly_1")
 ### Scatterplot of Response vs Dose
 
 
+```{r prepare-data-for-scatterplot-dose-response, eval=TRUE}
+
+scatterplot_tbl <- reactive({
+
+     data <- Data %>% dplyr::filter(Drug == input$picker_drug_name) 
+
+     print(data)
+})
+
+
+
+
+ renderPrint(scatterplot_tbl())
+
+
+  
+```
+
+
 ```{r set-up-model-statement, eval=FALSE}
 
 
@@ -515,24 +534,6 @@ names(Fit) = c("CONCEN.uM", "Response")
 
 ```
 
-
-```{r prepare-data-for-scatterplot-dose-response, eval=TRUE}
-
-scatterplot_tbl <- reactive({
-
-     data <- Data %>% dplyr::filter(Drug == input$picker_drug_name) 
-
-     print(data)
-})
-
-
-
-
- renderPrint(scatterplot_tbl())
-
-
-  
-```
 
 
 
