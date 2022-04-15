@@ -427,7 +427,7 @@ scatterplot_tbl <- reactive({
 
      data <- Data %>% dplyr::filter(Drug == input$picker_drug_name) 
 
-     print(data)
+#     print(data)
 })
 
 
@@ -450,7 +450,7 @@ model_fit <- reactive({
     
 #    model <- drm(Response ~ CONCEN.uM, data = scatterplot_tbl(), fct = LL.3u(upper = 100))
     model <- lm(Response ~ CONCEN.uM, data = scatterplot_tbl())
-
+    summary(model)
 })
 
 renderPrint(class(model_fit()))
