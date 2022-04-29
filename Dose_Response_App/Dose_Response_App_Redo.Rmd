@@ -542,8 +542,8 @@ toListen <- reactive({
 
 # from: https://community.rstudio.com/t/shiny-reactive-input-for-multiple-input-selectors/35157/5
 
-AIC_model_fit <- reactive({
-  selectizeInput(toListen())
+AIC_model_fit <- reactive({toListen()
+
     
     AIC(model_run())
 })
