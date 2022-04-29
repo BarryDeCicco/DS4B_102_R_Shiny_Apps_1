@@ -531,20 +531,19 @@ toListen <- reactive({
     list('inputId$picker_drug_name','inputId$picker_model_name')
   })
 
-
-renderPrint(toListen())
+# renderPrint(toListen())
 
 
 ```
 
-```{r get-aic-from-model-run-and-drug-selected, eval=FALSE}
+```{r get-aic-from-model-run-and-drug-selected}
 
 
 
 # from: https://community.rstudio.com/t/shiny-reactive-input-for-multiple-input-selectors/35157/5
 
 AIC_model_fit <- reactive({
-  selectizeInput(picker_model_name,picker_drug_name)
+  selectizeInput(toListen())
     
     AIC(model_run())
 })
