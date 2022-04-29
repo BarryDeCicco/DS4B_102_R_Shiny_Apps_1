@@ -528,7 +528,7 @@ AIC_model_fit <- reactive({
 ```{r trying-toListen}
 # From: https://stackoverflow.com/questions/41960953/how-to-listen-for-more-than-one-event-expression-within-a-shiny-observeevent
 toListen <- reactive({
-    list(inputId$picker_drug_name,inputId$picker_model_name)
+    list('inputId$picker_drug_name','inputId$picker_model_name')
   })
 
 
