@@ -500,8 +500,8 @@ model_fit <- reactive({
 
 model_run <- reactive({
   
-    
-   model_run <- model_statement()
+    model_run <-  model_fit()
+#   model_run <- model_statement()
 
 })
 
