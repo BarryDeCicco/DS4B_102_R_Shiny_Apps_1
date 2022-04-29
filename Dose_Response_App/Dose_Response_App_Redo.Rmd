@@ -533,8 +533,7 @@ AIC_model_fit <- reactive({
 # from: https://community.rstudio.com/t/shiny-reactive-input-for-multiple-input-selectors/35157/5
 
 AIC_model_fit <- reactive({
-  selectizeInput(scatterplot_tbl(),
-                 model_run())
+  selectizeInput(scatterplot_tbl(),model_run())
     
     AIC(model_run())
 })
