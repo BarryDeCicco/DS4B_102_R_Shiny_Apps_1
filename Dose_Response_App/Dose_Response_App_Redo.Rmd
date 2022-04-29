@@ -510,6 +510,19 @@ model_run <- reactive({
 
 ```
 
+```{r get-aic-from-model-run}
+
+
+AIC_model_fit <- reactive({
+  
+    
+    AIC(model_run())
+})
+
+renderPrint(AIC_model_fit())
+
+
+```
 
 ```{r run-prediction, eval = TRUE}
 
