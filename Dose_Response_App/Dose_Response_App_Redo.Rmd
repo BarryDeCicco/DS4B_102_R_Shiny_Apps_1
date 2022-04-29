@@ -519,7 +519,7 @@ AIC_model_fit <- reactive({
     AIC(model_run())
 })
 
-renderPrint(AIC_model_fit())
+# renderPrint(AIC_model_fit())
 
 
 ```
