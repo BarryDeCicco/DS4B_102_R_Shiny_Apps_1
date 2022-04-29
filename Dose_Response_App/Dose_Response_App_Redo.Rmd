@@ -510,7 +510,7 @@ model_run <- reactive({
 
 ```
 
-```{r get-aic-from-model-run}
+```{r get-aic-from-model-run, eval=FALSE}
 
 
 AIC_model_fit <- reactive({
@@ -523,6 +523,24 @@ AIC_model_fit <- reactive({
 
 
 ```
+
+
+
+```{r get-aic-from-model-run-and-drug-selected}
+
+# From: https://stackoverflow.com/questions/41960953/how-to-listen-for-more-than-one-event-expression-within-a-shiny-observeevent
+
+AIC_model_fit <- reactive({
+  
+    
+    AIC(model_run())
+})
+
+# renderPrint(AIC_model_fit())
+
+
+```
+
 
 ```{r run-prediction, eval = TRUE}
 
