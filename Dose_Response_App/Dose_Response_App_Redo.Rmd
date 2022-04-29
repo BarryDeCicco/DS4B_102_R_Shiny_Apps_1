@@ -564,8 +564,11 @@ print(Fit)
 
 output$plotly_2 <- renderPlotly({
 
-scatterplot_title = paste0("Dose and Response:  Drug = ", input$picker_drug_name, 
-                           "\n Model = ",model_row_reactive()$Model_Name)
+scatterplot_title = paste0("Dose and Response:  Drug = ", input$picker_drug_name, "\n Model = "
+,  model_row_reactive()$Model_Name
+,"\n AIC = "
+, AIC_model_fit()
+)
     
     scatterplot_tbl() %>% ggplot(., aes(x = round(CONCEN.uM,2), y = Response)) + 
         scale_x_continuous(name = "CONCEN.uM", trans='log') +
