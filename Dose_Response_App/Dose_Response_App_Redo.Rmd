@@ -542,6 +542,9 @@ toListen <- reactive({
 
 # from: https://community.rstudio.com/t/shiny-reactive-input-for-multiple-input-selectors/35157/5
 
+# From: https://stackoverflow.com/questions/34731975/how-to-listen-for-more-than-one-event-expression-within-a-shiny-eventreactive-ha
+
+
 AIC_model_fit <- reactive({toListen()
 
     
