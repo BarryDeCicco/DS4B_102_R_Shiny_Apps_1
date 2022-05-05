@@ -548,7 +548,7 @@ toListen <- reactive({
 AIC_model_fit <- reactive({toListen()
 
     
-    AIC(model_run())
+    round(AIC(model_run()),2)
 })
 
 # renderPrint(AIC_model_fit())
